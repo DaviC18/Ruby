@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: ruby-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ruby
+      POSTGRES_PASSWORD: ruby
+      POSTGRES_DB: ruby
+      TZ: UTC
+    ports:
+      - "5434:5432" # Porta 5434 na sua máquina -> 5432 no container
+    volumes:
+      - ruby_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ruby -d ruby"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  db_test:
+    image: postgres:16-alpine
+    container_name: ruby-db-test
+    environment:
+      POSTGRES_USER: ruby
+      POSTGRES_PASSWORD: ruby
+      POSTGRES_DB: ruby_test
+      TZ: UTC
+    ports:
+      - "5433:5432" # Porta 5433 na sua máquina -> 5432 no container
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ruby -d ruby_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  ruby_db_data:
