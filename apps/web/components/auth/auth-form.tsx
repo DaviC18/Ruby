@@ -267,7 +267,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
               ? `/entrar${next ? `?next=${encodeURIComponent(next)}` : ""}`
               : "/cadastro"
           }
-          className="font-medium text-primary underline-offset-4 hover:underline"
+          className="font-medium text-link underline-offset-4 hover:underline"
         >
           {isSignup ? "Entrar" : "Criar conta"}
         </Link>

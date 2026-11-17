@@ -41,7 +41,7 @@ export function CallBoard({
   return (
     <section
       aria-labelledby="quadro-titulo"
-      className="overflow-hidden rounded-xl bg-board text-board-foreground shadow-[0_12px_32px_-16px_oklch(0.19_0.012_20/0.55)]"
+      className="overflow-hidden rounded-xl border border-board-line bg-board text-board-foreground"
     >
       <h2 id="quadro-titulo" className="sr-only">
         Quadro de chamada

@@ -59,7 +59,7 @@ export function TodayAgenda({
 
   return (
     <section aria-labelledby="agenda-titulo" className={className}>
-      <header className="flex flex-wrap items-end justify-between gap-3 border-b-2 border-foreground pb-3">
+      <header className="flex flex-wrap items-end justify-between gap-3 border-b-2 border-foreground/70 pb-3">
         <div>
           <h2
             id="agenda-titulo"
@@ -111,7 +111,7 @@ export function TodayAgenda({
                 className={cn(
                   "flex items-center gap-2 font-mono text-base font-medium tabular-nums",
                   isNow
-                    ? "text-primary"
+                    ? "text-link"
                     : lit
                       ? "text-changed-foreground"
                       : past

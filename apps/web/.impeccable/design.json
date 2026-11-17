@@ -1,22 +1,22 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-17T00:10:02+00:00",
+  "generatedAt": "2026-11-16T12:00:00+00:00",
   "title": "Design System: Ruby",
   "extensions": {
     "colorMeta": {
       "primary": {
         "role": "primary",
         "displayName": "Ruby",
-        "canonical": "oklch(0.5 0.19 18)",
+        "canonical": "oklch(0.55 0.2 20)",
         "tonalRamp": [
-          "oklch(0.15 0.122 18)",
-          "oklch(0.26 0.14 18)",
-          "oklch(0.37 0.159 18)",
-          "oklch(0.48 0.178 18)",
-          "oklch(0.59 0.183 18)",
-          "oklch(0.7 0.164 18)",
-          "oklch(0.82 0.144 18)",
-          "oklch(0.95 0.122 18)"
+          "oklch(0.15 0.128 20)",
+          "oklch(0.26 0.148 20)",
+          "oklch(0.37 0.168 20)",
+          "oklch(0.48 0.187 20)",
+          "oklch(0.59 0.193 20)",
+          "oklch(0.7 0.173 20)",
+          "oklch(0.82 0.151 20)",
+          "oklch(0.95 0.128 20)"
         ]
       },
       "primary-foreground": {
@@ -34,130 +34,70 @@
           "oklch(0.95 0.003 20)"
         ]
       },
+      "link": {
+        "role": "primary",
+        "displayName": "Lit Ruby Text",
+        "canonical": "oklch(0.74 0.16 22)",
+        "tonalRamp": [
+          "oklch(0.15 0.102 22)",
+          "oklch(0.26 0.118 22)",
+          "oklch(0.37 0.134 22)",
+          "oklch(0.48 0.15 22)",
+          "oklch(0.59 0.154 22)",
+          "oklch(0.7 0.138 22)",
+          "oklch(0.82 0.121 22)",
+          "oklch(0.95 0.102 22)"
+        ]
+      },
+      "ring": {
+        "role": "primary",
+        "displayName": "Ruby Focus",
+        "canonical": "oklch(0.68 0.2 22)",
+        "tonalRamp": [
+          "oklch(0.15 0.128 22)",
+          "oklch(0.26 0.148 22)",
+          "oklch(0.37 0.168 22)",
+          "oklch(0.48 0.187 22)",
+          "oklch(0.59 0.193 22)",
+          "oklch(0.7 0.173 22)",
+          "oklch(0.82 0.151 22)",
+          "oklch(0.95 0.128 22)"
+        ]
+      },
       "accent-now": {
         "role": "primary",
         "displayName": "Ruby Wash",
-        "canonical": "oklch(0.945 0.024 18)",
+        "canonical": "oklch(0.25 0.045 18)",
         "tonalRamp": [
-          "oklch(0.15 0.015 18)",
-          "oklch(0.26 0.018 18)",
-          "oklch(0.37 0.02 18)",
-          "oklch(0.48 0.022 18)",
-          "oklch(0.59 0.023 18)",
-          "oklch(0.7 0.021 18)",
-          "oklch(0.82 0.018 18)",
-          "oklch(0.95 0.015 18)"
+          "oklch(0.15 0.029 18)",
+          "oklch(0.26 0.033 18)",
+          "oklch(0.37 0.038 18)",
+          "oklch(0.48 0.042 18)",
+          "oklch(0.59 0.043 18)",
+          "oklch(0.7 0.039 18)",
+          "oklch(0.82 0.034 18)",
+          "oklch(0.95 0.029 18)"
         ]
       },
       "accent-now-foreground": {
         "role": "primary",
-        "displayName": "Ruby Wash Ink",
-        "canonical": "oklch(0.42 0.17 18)",
+        "displayName": "Ruby Wash Text",
+        "canonical": "oklch(0.9 0.06 18)",
         "tonalRamp": [
-          "oklch(0.15 0.109 18)",
-          "oklch(0.26 0.126 18)",
-          "oklch(0.37 0.142 18)",
-          "oklch(0.48 0.159 18)",
-          "oklch(0.59 0.164 18)",
-          "oklch(0.7 0.147 18)",
-          "oklch(0.82 0.129 18)",
-          "oklch(0.95 0.109 18)"
+          "oklch(0.15 0.038 18)",
+          "oklch(0.26 0.044 18)",
+          "oklch(0.37 0.05 18)",
+          "oklch(0.48 0.056 18)",
+          "oklch(0.59 0.058 18)",
+          "oklch(0.7 0.052 18)",
+          "oklch(0.82 0.045 18)",
+          "oklch(0.95 0.038 18)"
         ]
       },
       "ground": {
         "role": "neutral",
-        "displayName": "Tinted Ground",
-        "canonical": "oklch(0.975 0.004 20)",
-        "tonalRamp": [
-          "oklch(0.15 0.003 20)",
-          "oklch(0.26 0.003 20)",
-          "oklch(0.37 0.003 20)",
-          "oklch(0.48 0.004 20)",
-          "oklch(0.59 0.004 20)",
-          "oklch(0.7 0.003 20)",
-          "oklch(0.82 0.003 20)",
-          "oklch(0.95 0.003 20)"
-        ]
-      },
-      "ink": {
-        "role": "neutral",
-        "displayName": "Warm Ink",
-        "canonical": "oklch(0.2 0.014 20)",
-        "tonalRamp": [
-          "oklch(0.15 0.009 20)",
-          "oklch(0.26 0.01 20)",
-          "oklch(0.37 0.012 20)",
-          "oklch(0.48 0.013 20)",
-          "oklch(0.59 0.013 20)",
-          "oklch(0.7 0.012 20)",
-          "oklch(0.82 0.011 20)",
-          "oklch(0.95 0.009 20)"
-        ]
-      },
-      "paper": {
-        "role": "neutral",
-        "displayName": "Paper",
-        "canonical": "oklch(0.995 0.002 20)",
-        "tonalRamp": [
-          "oklch(0.15 0.001 20)",
-          "oklch(0.26 0.001 20)",
-          "oklch(0.37 0.002 20)",
-          "oklch(0.48 0.002 20)",
-          "oklch(0.59 0.002 20)",
-          "oklch(0.7 0.002 20)",
-          "oklch(0.82 0.002 20)",
-          "oklch(0.95 0.001 20)"
-        ]
-      },
-      "muted": {
-        "role": "neutral",
-        "displayName": "Warm Mist",
-        "canonical": "oklch(0.945 0.006 20)",
-        "tonalRamp": [
-          "oklch(0.15 0.004 20)",
-          "oklch(0.26 0.004 20)",
-          "oklch(0.37 0.005 20)",
-          "oklch(0.48 0.006 20)",
-          "oklch(0.59 0.006 20)",
-          "oklch(0.7 0.005 20)",
-          "oklch(0.82 0.005 20)",
-          "oklch(0.95 0.004 20)"
-        ]
-      },
-      "muted-foreground": {
-        "role": "neutral",
-        "displayName": "Warm Mist Ink",
-        "canonical": "oklch(0.47 0.014 20)",
-        "tonalRamp": [
-          "oklch(0.15 0.009 20)",
-          "oklch(0.26 0.01 20)",
-          "oklch(0.37 0.012 20)",
-          "oklch(0.48 0.013 20)",
-          "oklch(0.59 0.013 20)",
-          "oklch(0.7 0.012 20)",
-          "oklch(0.82 0.011 20)",
-          "oklch(0.95 0.009 20)"
-        ]
-      },
-      "hairline": {
-        "role": "neutral",
-        "displayName": "Hairline",
-        "canonical": "oklch(0.905 0.008 20)",
-        "tonalRamp": [
-          "oklch(0.15 0.005 20)",
-          "oklch(0.26 0.006 20)",
-          "oklch(0.37 0.007 20)",
-          "oklch(0.48 0.007 20)",
-          "oklch(0.59 0.008 20)",
-          "oklch(0.7 0.007 20)",
-          "oklch(0.82 0.006 20)",
-          "oklch(0.95 0.005 20)"
-        ]
-      },
-      "input-stroke": {
-        "role": "neutral",
-        "displayName": "Input Stroke",
-        "canonical": "oklch(0.88 0.01 20)",
+        "displayName": "Warm Black Ground",
+        "canonical": "oklch(0.165 0.01 20)",
         "tonalRamp": [
           "oklch(0.15 0.006 20)",
           "oklch(0.26 0.007 20)",
@@ -169,10 +109,25 @@
           "oklch(0.95 0.006 20)"
         ]
       },
-      "housing": {
+      "ink": {
         "role": "neutral",
-        "displayName": "Warm Black Housing",
-        "canonical": "oklch(0.19 0.012 20)",
+        "displayName": "Warm Ink",
+        "canonical": "oklch(0.94 0.006 20)",
+        "tonalRamp": [
+          "oklch(0.15 0.004 20)",
+          "oklch(0.26 0.004 20)",
+          "oklch(0.37 0.005 20)",
+          "oklch(0.48 0.006 20)",
+          "oklch(0.59 0.006 20)",
+          "oklch(0.7 0.005 20)",
+          "oklch(0.82 0.005 20)",
+          "oklch(0.95 0.004 20)"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Card",
+        "canonical": "oklch(0.2 0.012 20)",
         "tonalRamp": [
           "oklch(0.15 0.008 20)",
           "oklch(0.26 0.009 20)",
@@ -184,9 +139,189 @@
           "oklch(0.95 0.008 20)"
         ]
       },
-      "housing-foreground": {
+      "popover": {
         "role": "neutral",
-        "displayName": "Housing Text",
+        "displayName": "Popover",
+        "canonical": "oklch(0.21 0.012 20)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 20)",
+          "oklch(0.26 0.009 20)",
+          "oklch(0.37 0.01 20)",
+          "oklch(0.48 0.011 20)",
+          "oklch(0.59 0.012 20)",
+          "oklch(0.7 0.01 20)",
+          "oklch(0.82 0.009 20)",
+          "oklch(0.95 0.008 20)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Warm Mist",
+        "canonical": "oklch(0.24 0.012 20)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 20)",
+          "oklch(0.26 0.009 20)",
+          "oklch(0.37 0.01 20)",
+          "oklch(0.48 0.011 20)",
+          "oklch(0.59 0.012 20)",
+          "oklch(0.7 0.01 20)",
+          "oklch(0.82 0.009 20)",
+          "oklch(0.95 0.008 20)"
+        ]
+      },
+      "muted-foreground": {
+        "role": "neutral",
+        "displayName": "Warm Mist Text",
+        "canonical": "oklch(0.72 0.012 20)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 20)",
+          "oklch(0.26 0.009 20)",
+          "oklch(0.37 0.01 20)",
+          "oklch(0.48 0.011 20)",
+          "oklch(0.59 0.012 20)",
+          "oklch(0.7 0.01 20)",
+          "oklch(0.82 0.009 20)",
+          "oklch(0.95 0.008 20)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(1 0 0 / 10%)",
+        "tonalRamp": [
+          "oklch(0.15 0.0 0)",
+          "oklch(0.26 0.0 0)",
+          "oklch(0.37 0.0 0)",
+          "oklch(0.48 0.0 0)",
+          "oklch(0.59 0.0 0)",
+          "oklch(0.7 0.0 0)",
+          "oklch(0.82 0.0 0)",
+          "oklch(0.95 0.0 0)"
+        ]
+      },
+      "input-stroke": {
+        "role": "neutral",
+        "displayName": "Input Stroke",
+        "canonical": "oklch(1 0 0 / 16%)",
+        "tonalRamp": [
+          "oklch(0.15 0.0 0)",
+          "oklch(0.26 0.0 0)",
+          "oklch(0.37 0.0 0)",
+          "oklch(0.48 0.0 0)",
+          "oklch(0.59 0.0 0)",
+          "oklch(0.7 0.0 0)",
+          "oklch(0.82 0.0 0)",
+          "oklch(0.95 0.0 0)"
+        ]
+      },
+      "rail": {
+        "role": "neutral",
+        "displayName": "Rail",
+        "canonical": "oklch(0.125 0.008 20)",
+        "tonalRamp": [
+          "oklch(0.15 0.005 20)",
+          "oklch(0.26 0.006 20)",
+          "oklch(0.37 0.007 20)",
+          "oklch(0.48 0.007 20)",
+          "oklch(0.59 0.008 20)",
+          "oklch(0.7 0.007 20)",
+          "oklch(0.82 0.006 20)",
+          "oklch(0.95 0.005 20)"
+        ]
+      },
+      "rail-foreground": {
+        "role": "neutral",
+        "displayName": "Rail Text",
+        "canonical": "oklch(0.93 0.008 20)",
+        "tonalRamp": [
+          "oklch(0.15 0.005 20)",
+          "oklch(0.26 0.006 20)",
+          "oklch(0.37 0.007 20)",
+          "oklch(0.48 0.007 20)",
+          "oklch(0.59 0.008 20)",
+          "oklch(0.7 0.007 20)",
+          "oklch(0.82 0.006 20)",
+          "oklch(0.95 0.005 20)"
+        ]
+      },
+      "rail-muted": {
+        "role": "neutral",
+        "displayName": "Rail Muted",
+        "canonical": "oklch(0.7 0.012 20)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 20)",
+          "oklch(0.26 0.009 20)",
+          "oklch(0.37 0.01 20)",
+          "oklch(0.48 0.011 20)",
+          "oklch(0.59 0.012 20)",
+          "oklch(0.7 0.01 20)",
+          "oklch(0.82 0.009 20)",
+          "oklch(0.95 0.008 20)"
+        ]
+      },
+      "rail-raised": {
+        "role": "neutral",
+        "displayName": "Rail Raised",
+        "canonical": "oklch(0.21 0.016 20)",
+        "tonalRamp": [
+          "oklch(0.15 0.01 20)",
+          "oklch(0.26 0.012 20)",
+          "oklch(0.37 0.013 20)",
+          "oklch(0.48 0.015 20)",
+          "oklch(0.59 0.015 20)",
+          "oklch(0.7 0.014 20)",
+          "oklch(0.82 0.012 20)",
+          "oklch(0.95 0.01 20)"
+        ]
+      },
+      "rail-line": {
+        "role": "neutral",
+        "displayName": "Rail Line",
+        "canonical": "oklch(1 0 0 / 8%)",
+        "tonalRamp": [
+          "oklch(0.15 0.0 0)",
+          "oklch(0.26 0.0 0)",
+          "oklch(0.37 0.0 0)",
+          "oklch(0.48 0.0 0)",
+          "oklch(0.59 0.0 0)",
+          "oklch(0.7 0.0 0)",
+          "oklch(0.82 0.0 0)",
+          "oklch(0.95 0.0 0)"
+        ]
+      },
+      "rail-ruby": {
+        "role": "primary",
+        "displayName": "Lit Ruby (rail)",
+        "canonical": "oklch(0.68 0.2 22)",
+        "tonalRamp": [
+          "oklch(0.15 0.128 22)",
+          "oklch(0.26 0.148 22)",
+          "oklch(0.37 0.168 22)",
+          "oklch(0.48 0.187 22)",
+          "oklch(0.59 0.193 22)",
+          "oklch(0.7 0.173 22)",
+          "oklch(0.82 0.151 22)",
+          "oklch(0.95 0.128 22)"
+        ]
+      },
+      "board": {
+        "role": "neutral",
+        "displayName": "Call Board",
+        "canonical": "oklch(0.12 0.008 20)",
+        "tonalRamp": [
+          "oklch(0.15 0.005 20)",
+          "oklch(0.26 0.006 20)",
+          "oklch(0.37 0.007 20)",
+          "oklch(0.48 0.007 20)",
+          "oklch(0.59 0.008 20)",
+          "oklch(0.7 0.007 20)",
+          "oklch(0.82 0.006 20)",
+          "oklch(0.95 0.005 20)"
+        ]
+      },
+      "board-foreground": {
+        "role": "neutral",
+        "displayName": "Board Text",
         "canonical": "oklch(0.95 0.006 20)",
         "tonalRamp": [
           "oklch(0.15 0.004 20)",
@@ -199,39 +334,24 @@
           "oklch(0.95 0.004 20)"
         ]
       },
-      "housing-muted": {
+      "board-muted": {
         "role": "neutral",
-        "displayName": "Housing Muted",
-        "canonical": "oklch(0.72 0.014 20)",
+        "displayName": "Board Muted",
+        "canonical": "oklch(0.72 0.012 20)",
         "tonalRamp": [
-          "oklch(0.15 0.009 20)",
-          "oklch(0.26 0.01 20)",
-          "oklch(0.37 0.012 20)",
-          "oklch(0.48 0.013 20)",
-          "oklch(0.59 0.013 20)",
-          "oklch(0.7 0.012 20)",
-          "oklch(0.82 0.011 20)",
-          "oklch(0.95 0.009 20)"
+          "oklch(0.15 0.008 20)",
+          "oklch(0.26 0.009 20)",
+          "oklch(0.37 0.01 20)",
+          "oklch(0.48 0.011 20)",
+          "oklch(0.59 0.012 20)",
+          "oklch(0.7 0.01 20)",
+          "oklch(0.82 0.009 20)",
+          "oklch(0.95 0.008 20)"
         ]
       },
-      "housing-raised": {
+      "board-line": {
         "role": "neutral",
-        "displayName": "Housing Raised",
-        "canonical": "oklch(0.255 0.018 20)",
-        "tonalRamp": [
-          "oklch(0.15 0.012 20)",
-          "oklch(0.26 0.013 20)",
-          "oklch(0.37 0.015 20)",
-          "oklch(0.48 0.017 20)",
-          "oklch(0.59 0.017 20)",
-          "oklch(0.7 0.016 20)",
-          "oklch(0.82 0.014 20)",
-          "oklch(0.95 0.012 20)"
-        ]
-      },
-      "housing-line": {
-        "role": "neutral",
-        "displayName": "Housing Line",
+        "displayName": "Board Line",
         "canonical": "oklch(1 0 0 / 9%)",
         "tonalRamp": [
           "oklch(0.15 0.0 0)",
@@ -242,21 +362,6 @@
           "oklch(0.7 0.0 0)",
           "oklch(0.82 0.0 0)",
           "oklch(0.95 0.0 0)"
-        ]
-      },
-      "housing-ruby": {
-        "role": "primary",
-        "displayName": "Lit Ruby (rail)",
-        "canonical": "oklch(0.66 0.2 22)",
-        "tonalRamp": [
-          "oklch(0.15 0.128 22)",
-          "oklch(0.26 0.148 22)",
-          "oklch(0.37 0.168 22)",
-          "oklch(0.48 0.187 22)",
-          "oklch(0.59 0.193 22)",
-          "oklch(0.7 0.173 22)",
-          "oklch(0.82 0.151 22)",
-          "oklch(0.95 0.128 22)"
         ]
       },
       "board-glow": {
@@ -277,61 +382,61 @@
       "changed": {
         "role": "secondary",
         "displayName": "Signal Amber",
-        "canonical": "oklch(0.72 0.15 70)",
+        "canonical": "oklch(0.78 0.14 75)",
         "tonalRamp": [
-          "oklch(0.15 0.096 70)",
-          "oklch(0.26 0.111 70)",
-          "oklch(0.37 0.126 70)",
-          "oklch(0.48 0.141 70)",
-          "oklch(0.59 0.145 70)",
-          "oklch(0.7 0.13 70)",
-          "oklch(0.82 0.114 70)",
-          "oklch(0.95 0.096 70)"
+          "oklch(0.15 0.09 75)",
+          "oklch(0.26 0.103 75)",
+          "oklch(0.37 0.117 75)",
+          "oklch(0.48 0.131 75)",
+          "oklch(0.59 0.135 75)",
+          "oklch(0.7 0.121 75)",
+          "oklch(0.82 0.106 75)",
+          "oklch(0.95 0.09 75)"
         ]
       },
       "changed-surface": {
         "role": "secondary",
         "displayName": "Amber Surface",
-        "canonical": "oklch(0.96 0.045 85)",
+        "canonical": "oklch(0.26 0.045 70)",
         "tonalRamp": [
-          "oklch(0.15 0.029 85)",
-          "oklch(0.26 0.033 85)",
-          "oklch(0.37 0.038 85)",
-          "oklch(0.48 0.042 85)",
-          "oklch(0.59 0.043 85)",
-          "oklch(0.7 0.039 85)",
-          "oklch(0.82 0.034 85)",
-          "oklch(0.95 0.029 85)"
+          "oklch(0.15 0.029 70)",
+          "oklch(0.26 0.033 70)",
+          "oklch(0.37 0.038 70)",
+          "oklch(0.48 0.042 70)",
+          "oklch(0.59 0.043 70)",
+          "oklch(0.7 0.039 70)",
+          "oklch(0.82 0.034 70)",
+          "oklch(0.95 0.029 70)"
         ]
       },
       "changed-foreground": {
         "role": "secondary",
-        "displayName": "Amber Ink",
-        "canonical": "oklch(0.42 0.09 60)",
+        "displayName": "Amber Text",
+        "canonical": "oklch(0.86 0.11 80)",
         "tonalRamp": [
-          "oklch(0.15 0.058 60)",
-          "oklch(0.26 0.067 60)",
-          "oklch(0.37 0.075 60)",
-          "oklch(0.48 0.084 60)",
-          "oklch(0.59 0.087 60)",
-          "oklch(0.7 0.078 60)",
-          "oklch(0.82 0.068 60)",
-          "oklch(0.95 0.058 60)"
+          "oklch(0.15 0.07 80)",
+          "oklch(0.26 0.081 80)",
+          "oklch(0.37 0.092 80)",
+          "oklch(0.48 0.103 80)",
+          "oklch(0.59 0.106 80)",
+          "oklch(0.7 0.095 80)",
+          "oklch(0.82 0.083 80)",
+          "oklch(0.95 0.07 80)"
         ]
       },
       "destructive": {
         "role": "neutral",
         "displayName": "Destructive",
-        "canonical": "oklch(0.55 0.2 28)",
+        "canonical": "oklch(0.7 0.18 25)",
         "tonalRamp": [
-          "oklch(0.15 0.128 28)",
-          "oklch(0.26 0.148 28)",
-          "oklch(0.37 0.168 28)",
-          "oklch(0.48 0.187 28)",
-          "oklch(0.59 0.193 28)",
-          "oklch(0.7 0.173 28)",
-          "oklch(0.82 0.151 28)",
-          "oklch(0.95 0.128 28)"
+          "oklch(0.15 0.115 25)",
+          "oklch(0.26 0.133 25)",
+          "oklch(0.37 0.151 25)",
+          "oklch(0.48 0.169 25)",
+          "oklch(0.59 0.174 25)",
+          "oklch(0.7 0.156 25)",
+          "oklch(0.82 0.136 25)",
+          "oklch(0.95 0.115 25)"
         ]
       }
     },
@@ -346,7 +451,7 @@
       },
       "title": {
         "displayName": "Section Title",
-        "purpose": "Ruled section heads."
+        "purpose": "Ruled section heads and the Ruby wordmark."
       },
       "body": {
         "displayName": "Body",
@@ -367,14 +472,9 @@
     },
     "shadows": [
       {
-        "name": "board-drop",
-        "value": "0 12px 32px -16px oklch(0.19 0.012 20 / 0.55)",
-        "purpose": "Call board only; the panel's single shadow."
-      },
-      {
         "name": "focus-ring",
         "value": "outline: 2px solid var(--ring); outline-offset: 2px",
-        "purpose": "Global focus-visible ring in ruby; kit buttons use a 3px ruby ring at 50%."
+        "purpose": "Global focus-visible ring in ruby; kit buttons use a 3px ruby ring at 50%. The system has no drop shadows."
       }
     ],
     "motion": [
@@ -416,7 +516,7 @@
       "refersTo": "button-primary",
       "description": "The one direct action in a section (Responder).",
       "html": "<button class=\"ds-btn-primary\">Responder</button>",
-      "css": ".ds-btn-primary{font-family:var(--font-chivo),system-ui,sans-serif;background:var(--primary,oklch(0.5 0.19 18));color:var(--primary-foreground,oklch(0.985 0.004 20));height:36px;padding:0 10px;border:1px solid transparent;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s}.ds-btn-primary:hover{background:oklch(0.5 0.19 18 / 0.8)}.ds-btn-primary:focus-visible{outline:none;box-shadow:0 0 0 3px oklch(0.5 0.19 18 / 0.5)}.ds-btn-primary:active{transform:translateY(1px)}"
+      "css": ".ds-btn-primary{font-family:var(--font-chivo),system-ui,sans-serif;background:var(--primary,oklch(0.55 0.2 20));color:var(--primary-foreground,oklch(0.985 0.004 20));height:36px;padding:0 10px;border:1px solid transparent;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s}.ds-btn-primary:hover{background:oklch(0.55 0.2 20 / 0.8)}.ds-btn-primary:focus-visible{outline:none;box-shadow:0 0 0 3px oklch(0.68 0.2 22 / 0.5)}.ds-btn-primary:active{transform:translateY(1px)}"
     },
     {
       "name": "Outline Button",
@@ -424,7 +524,15 @@
       "refersTo": "button-outline",
       "description": "Navigation-like actions (Ver agendamentos, Continuar).",
       "html": "<button class=\"ds-btn-outline\">Ver agendamentos</button>",
-      "css": ".ds-btn-outline{font-family:var(--font-chivo),system-ui,sans-serif;background:var(--background,oklch(0.975 0.004 20));color:var(--foreground,oklch(0.2 0.014 20));height:36px;padding:0 10px;border:1px solid var(--border,oklch(0.905 0.008 20));border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s}.ds-btn-outline:hover{background:var(--muted,oklch(0.945 0.006 20))}.ds-btn-outline:focus-visible{outline:none;border-color:oklch(0.5 0.19 18);box-shadow:0 0 0 3px oklch(0.5 0.19 18 / 0.5)}.ds-btn-outline:active{transform:translateY(1px)}"
+      "css": ".ds-btn-outline{font-family:var(--font-chivo),system-ui,sans-serif;background:oklch(1 0 0 / 4.8%);color:var(--foreground,oklch(0.94 0.006 20));height:36px;padding:0 10px;border:1px solid var(--input,oklch(1 0 0 / 16%));border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s}.ds-btn-outline:hover{background:oklch(1 0 0 / 8%)}.ds-btn-outline:focus-visible{outline:none;border-color:oklch(0.68 0.2 22);box-shadow:0 0 0 3px oklch(0.68 0.2 22 / 0.5)}.ds-btn-outline:active{transform:translateY(1px)}"
+    },
+    {
+      "name": "Link",
+      "kind": "button",
+      "refersTo": "button-link",
+      "description": "Ruby as text: lit ruby link, underline on hover.",
+      "html": "<a class=\"ds-link\" href=\"#\">Ver conversas</a>",
+      "css": ".ds-link{font-family:var(--font-chivo),system-ui,sans-serif;color:var(--link,oklch(0.74 0.16 22));font-size:14px;font-weight:500;text-decoration:none;text-underline-offset:4px}.ds-link:hover{text-decoration:underline}.ds-link:focus-visible{outline:2px solid oklch(0.68 0.2 22);outline-offset:2px}"
     },
     {
       "name": "Seen Button",
@@ -432,31 +540,31 @@
       "refersTo": "button-seen",
       "description": "Amber ghost button that clears a held change.",
       "html": "<button class=\"ds-btn-seen\"><svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/></svg>Marcar como visto</button>",
-      "css": ".ds-btn-seen{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-chivo),system-ui,sans-serif;background:transparent;color:var(--changed-foreground,oklch(0.42 0.09 60));height:28px;padding:0 10px 0 8px;border:1px solid transparent;border-radius:6.4px;font-size:12.8px;font-weight:500;cursor:pointer}.ds-btn-seen:hover{background:oklch(0.72 0.15 70 / 0.15)}.ds-btn-seen:focus-visible{outline:none;box-shadow:0 0 0 3px oklch(0.5 0.19 18 / 0.5)}"
+      "css": ".ds-btn-seen{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-chivo),system-ui,sans-serif;background:transparent;color:var(--changed-foreground,oklch(0.86 0.11 80));height:28px;padding:0 10px 0 8px;border:1px solid transparent;border-radius:6.4px;font-size:12.8px;font-weight:500;cursor:pointer}.ds-btn-seen:hover{background:oklch(0.78 0.14 75 / 0.15)}.ds-btn-seen:focus-visible{outline:none;box-shadow:0 0 0 3px oklch(0.68 0.2 22 / 0.5)}"
     },
     {
       "name": "Rail Navigation",
       "kind": "nav",
       "refersTo": "nav-item",
-      "description": "Warm-black rail; active item gets raised fill, ruby icon and a 1px ruby mark.",
+      "description": "The rail, one step deeper than the ground; active item gets raised fill, ruby icon and a 1px ruby mark.",
       "html": "<nav class=\"ds-rail\"><a class=\"ds-rail-item is-active\" href=\"#\"><span class=\"ds-rail-mark\"></span>Início</a><a class=\"ds-rail-item\" href=\"#\">Conversas<span class=\"ds-rail-count\">2</span></a><a class=\"ds-rail-item\" href=\"#\">Agendamentos</a></nav>",
-      "css": ".ds-rail{display:flex;flex-direction:column;gap:2px;width:240px;padding:12px;background:var(--sidebar,oklch(0.19 0.012 20));font-family:var(--font-chivo),system-ui,sans-serif}.ds-rail-item{position:relative;display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:6.4px;font-size:14px;color:var(--sidebar-muted,oklch(0.7 0.014 20));text-decoration:none;transition:color .15s,background .15s}.ds-rail-item:hover{background:var(--sidebar-accent,oklch(0.255 0.018 20));color:var(--sidebar-accent-foreground,oklch(0.97 0.006 20))}.ds-rail-item:focus-visible{outline:2px solid oklch(0.66 0.2 22);outline-offset:2px}.ds-rail-item.is-active{background:var(--sidebar-accent,oklch(0.255 0.018 20));color:var(--sidebar-accent-foreground,oklch(0.97 0.006 20));font-weight:500}.ds-rail-mark{position:absolute;left:0;top:10px;bottom:10px;width:1px;border-radius:9999px;background:var(--sidebar-primary,oklch(0.66 0.2 22))}.ds-rail-count{margin-left:auto;min-width:20px;padding:0 6px;border-radius:9999px;background:var(--sidebar-primary,oklch(0.66 0.2 22));color:oklch(0.985 0.004 20);font-family:var(--font-chivo-mono),ui-monospace,monospace;font-size:12px;line-height:20px;text-align:center;font-variant-numeric:tabular-nums}"
+      "css": ".ds-rail{display:flex;flex-direction:column;gap:2px;width:240px;padding:12px;background:var(--sidebar,oklch(0.125 0.008 20));font-family:var(--font-chivo),system-ui,sans-serif;}.ds-rail-item{position:relative;display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:6.4px;font-size:14px;color:var(--sidebar-muted,oklch(0.7 0.012 20));text-decoration:none;transition:color .15s,background .15s}.ds-rail-item:hover{background:var(--sidebar-accent,oklch(0.21 0.016 20));color:var(--sidebar-accent-foreground,oklch(0.97 0.006 20))}.ds-rail-item:focus-visible{outline:2px solid oklch(0.68 0.2 22);outline-offset:2px}.ds-rail-item.is-active{background:var(--sidebar-accent,oklch(0.21 0.016 20));color:var(--sidebar-accent-foreground,oklch(0.97 0.006 20));font-weight:500}.ds-rail-mark{position:absolute;left:0;top:10px;bottom:10px;width:1px;border-radius:9999px;background:var(--sidebar-primary,oklch(0.68 0.2 22))}.ds-rail-count{margin-left:auto;min-width:20px;padding:0 6px;border-radius:9999px;background:var(--sidebar-primary,oklch(0.68 0.2 22));color:oklch(0.985 0.004 20);font-family:var(--font-chivo-mono),ui-monospace,monospace;font-variant-numeric:tabular-nums;font-size:12px;line-height:20px;text-align:center}"
     },
     {
       "name": "Call Board",
       "kind": "custom",
       "refersTo": "call-board",
-      "description": "Signature warm-black panel: Agora (display time in lit ruby) beside Próximos.",
+      "description": "Signature recessed panel with a 1px board-line outline: Agora (display time in lit ruby) beside Próximos.",
       "html": "<section class=\"ds-board\"><div class=\"ds-board-now\"><h3><span class=\"ds-lamp\"></span>Agora</h3><p class=\"ds-board-time\">14:30</p><p class=\"ds-board-client\">Mariana Costa</p><p class=\"ds-board-meta\">Limpeza de pele · termina às <span class=\"ds-mono\">15:15</span></p></div><div class=\"ds-board-next\"><h3>Próximos</h3><ol><li><span class=\"ds-board-ntime\">15:30</span><span>Carlos Lima</span></li><li><span class=\"ds-board-ntime\">16:00</span><span>Ana Souza</span></li></ol></div></section>",
-      "css": ".ds-board{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);overflow:hidden;border-radius:11.2px;background:var(--board,oklch(0.19 0.012 20));color:var(--board-foreground,oklch(0.95 0.006 20));box-shadow:0 12px 32px -16px oklch(0.19 0.012 20 / 0.55);font-family:var(--font-chivo),system-ui,sans-serif}.ds-board-now{padding:32px;border-right:1px solid oklch(1 0 0 / 9%)}.ds-board-next{padding:32px}.ds-board h3{display:flex;align-items:center;gap:8px;margin:0;font-size:16px;font-weight:500}.ds-lamp{width:8px;height:8px;border-radius:9999px;background:oklch(0.68 0.21 24);animation:ds-lamp 1.1s ease-in-out 3}.ds-board-time{margin:16px 0 0;font-family:var(--font-chivo-mono),ui-monospace,monospace;font-size:72px;line-height:1;font-weight:500;letter-spacing:-0.025em;color:oklch(0.68 0.21 24);font-variant-numeric:tabular-nums}.ds-board-client{margin:20px 0 0;font-size:24px;font-weight:600;letter-spacing:-0.025em}.ds-board-meta{margin:6px 0 0;font-size:14px;color:oklch(0.72 0.014 20)}.ds-mono{font-family:var(--font-chivo-mono),ui-monospace,monospace;font-variant-numeric:tabular-nums}.ds-board-next ol{list-style:none;margin:12px 0 0;padding:0}.ds-board-next li{display:grid;grid-template-columns:4.5rem minmax(0,1fr);align-items:baseline;gap:16px;padding:14px 0;border-top:1px solid oklch(1 0 0 / 9%);font-weight:500}.ds-board-next li:first-child{border-top:0}.ds-board-ntime{font-family:var(--font-chivo-mono),ui-monospace,monospace;font-size:24px;font-variant-numeric:tabular-nums}@keyframes ds-lamp{0%,100%{opacity:1}50%{opacity:.35}}@media (prefers-reduced-motion:reduce){.ds-lamp{animation:none}}"
+      "css": ".ds-board{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);overflow:hidden;border-radius:11.2px;border:1px solid var(--board-line,oklch(1 0 0 / 9%));background:var(--board,oklch(0.12 0.008 20));color:var(--board-foreground,oklch(0.95 0.006 20));font-family:var(--font-chivo),system-ui,sans-serif;}.ds-board-now{padding:32px;border-right:1px solid var(--board-line,oklch(1 0 0 / 9%))}.ds-board-next{padding:32px}.ds-board h3{display:flex;align-items:center;gap:8px;margin:0;font-size:16px;font-weight:500}.ds-lamp{width:8px;height:8px;border-radius:9999px;background:var(--board-glow,oklch(0.68 0.21 24));animation:ds-lamp 1.1s ease-in-out 3}.ds-board-time{margin:16px 0 0;font-family:var(--font-chivo-mono),ui-monospace,monospace;font-variant-numeric:tabular-nums;font-size:72px;line-height:1;font-weight:500;letter-spacing:-0.025em;color:var(--board-glow,oklch(0.68 0.21 24))}.ds-board-client{margin:20px 0 0;font-size:24px;font-weight:600;letter-spacing:-0.025em}.ds-board-meta{margin:6px 0 0;font-size:14px;color:var(--board-muted,oklch(0.72 0.012 20))}.ds-mono{font-family:var(--font-chivo-mono),ui-monospace,monospace;font-variant-numeric:tabular-nums;}.ds-board-next ol{list-style:none;margin:12px 0 0;padding:0}.ds-board-next li{display:grid;grid-template-columns:4.5rem minmax(0,1fr);align-items:baseline;gap:16px;padding:14px 0;border-top:1px solid var(--board-line,oklch(1 0 0 / 9%));font-weight:500}.ds-board-next li:first-child{border-top:0}.ds-board-ntime{font-family:var(--font-chivo-mono),ui-monospace,monospace;font-variant-numeric:tabular-nums;font-size:24px}@keyframes ds-lamp{0%,100%{opacity:1}50%{opacity:.35}}@media (prefers-reduced-motion:reduce){.ds-lamp{animation:none}}"
     },
     {
       "name": "Ruled Section with Agenda Rows",
       "kind": "custom",
       "refersTo": "agenda-row-now",
-      "description": "2px ink head rule on the ground; hairline rows; now row in ruby wash, changed row held amber.",
-      "html": "<section class=\"ds-ruled\"><h2 class=\"ds-ruled-head\">Agenda de hoje</h2><ol><li class=\"ds-row\"><span class=\"ds-row-time\">09:00</span><span>Paulo Reis</span><span class=\"ds-row-status\">Confirmado</span></li><li class=\"ds-row is-now\"><span class=\"ds-row-time\">14:30</span><span>Mariana Costa <span class=\"ds-now-tag\">Agora</span></span><span class=\"ds-row-status\">Confirmado</span></li><li class=\"ds-row is-changed\"><span class=\"ds-row-time\">16:00</span><span>Ana Souza</span><span class=\"ds-row-status\">Remarcado</span></li></ol></section>",
-      "css": ".ds-ruled{font-family:var(--font-chivo),system-ui,sans-serif;color:var(--foreground,oklch(0.2 0.014 20));background:var(--background,oklch(0.975 0.004 20))}.ds-ruled-head{margin:0;padding-bottom:12px;border-bottom:2px solid var(--foreground,oklch(0.2 0.014 20));font-size:18px;font-weight:600;letter-spacing:-0.025em}.ds-ruled ol{list-style:none;margin:0;padding:0}.ds-row{display:grid;grid-template-columns:4.25rem minmax(0,1fr) auto;align-items:center;gap:4px 16px;padding:12px 8px;border-bottom:1px solid var(--border,oklch(0.905 0.008 20));font-size:14px}.ds-row-time{font-family:var(--font-chivo-mono),ui-monospace,monospace;font-size:16px;font-weight:500;font-variant-numeric:tabular-nums}.ds-row-status{font-weight:500}.ds-row.is-now{background:var(--accent,oklch(0.945 0.024 18))}.ds-row.is-now .ds-row-time{color:var(--primary,oklch(0.5 0.19 18))}.ds-now-tag{margin-left:8px;padding:1px 6px;border-radius:4.8px;background:var(--primary,oklch(0.5 0.19 18));color:oklch(0.985 0.004 20);font-size:12px;font-weight:600}.ds-row.is-changed{background:var(--changed-surface,oklch(0.96 0.045 85));color:var(--changed-foreground,oklch(0.42 0.09 60))}"
+      "description": "2px ink-at-70% head rule on the ground; hairline rows; now row in ruby wash with lit ruby time, changed row held amber.",
+      "html": "<section class=\"ds-ruled\"><h2 class=\"ds-ruled-head\">Agenda de hoje</h2><ol><li class=\"ds-row\"><span class=\"ds-row-time\">09:00</span><span>Paulo Reis</span><span class=\"ds-row-status\">Confirmado</span></li><li class=\"ds-row is-now\"><span class=\"ds-row-time\">14:30</span><span>Mariana Costa <span class=\"ds-now-tag\">Agora</span></span><span class=\"ds-row-status\">Confirmado</span></li><li class=\"ds-row is-changed\"><span class=\"ds-row-time\">16:00</span><span>Ana Souza</span><span class=\"ds-row-status\">Remarcado</span></li><li class=\"ds-row\"><span class=\"ds-row-time\">17:00</span><span>Rui Alves</span><span class=\"ds-row-status is-pending\">Aguardando</span></li></ol></section>",
+      "css": ".ds-ruled{font-family:var(--font-chivo),system-ui,sans-serif;color:var(--foreground,oklch(0.94 0.006 20));background:var(--background,oklch(0.165 0.01 20))}.ds-ruled-head{margin:0;padding-bottom:12px;border-bottom:2px solid oklch(0.94 0.006 20 / 0.7);font-size:18px;font-weight:600;letter-spacing:-0.025em}.ds-ruled ol{list-style:none;margin:0;padding:0}.ds-row{display:grid;grid-template-columns:4.25rem minmax(0,1fr) auto;align-items:center;gap:4px 16px;padding:12px 8px;border-bottom:1px solid var(--border,oklch(1 0 0 / 10%));font-size:14px}.ds-row-time{font-family:var(--font-chivo-mono),ui-monospace,monospace;font-variant-numeric:tabular-nums;font-size:16px;font-weight:500}.ds-row-status{font-weight:500}.ds-row-status.is-pending{color:var(--changed-foreground,oklch(0.86 0.11 80))}.ds-row.is-now{background:var(--accent,oklch(0.25 0.045 18))}.ds-row.is-now .ds-row-time{color:var(--link,oklch(0.74 0.16 22))}.ds-now-tag{margin-left:8px;padding:1px 6px;border-radius:4.8px;background:var(--primary,oklch(0.55 0.2 20));color:oklch(0.985 0.004 20);font-size:12px;font-weight:600}.ds-row.is-changed{background:var(--changed-surface,oklch(0.26 0.045 70));color:var(--changed-foreground,oklch(0.86 0.11 80))}"
     },
     {
       "name": "Count Badge",
@@ -464,18 +572,19 @@
       "refersTo": "count-badge",
       "description": "Ruby pill with mono digits for attendant requests.",
       "html": "<span class=\"ds-count\">3</span>",
-      "css": ".ds-count{display:inline-block;padding:0 6px;border-radius:9999px;background:var(--primary,oklch(0.5 0.19 18));color:oklch(0.985 0.004 20);font-family:var(--font-chivo-mono),ui-monospace,monospace;font-size:12px;line-height:20px;font-variant-numeric:tabular-nums}"
+      "css": ".ds-count{display:inline-block;padding:0 6px;border-radius:9999px;background:var(--primary,oklch(0.55 0.2 20));color:oklch(0.985 0.004 20);font-family:var(--font-chivo-mono),ui-monospace,monospace;font-variant-numeric:tabular-nums;font-size:12px;line-height:20px}"
     }
   ],
   "narrative": {
     "northStar": "The Reception Call Board",
-    "overview": "Ruby's panel reads the owner's day the way a clinic waiting room reads its call-number board: what is happening now, who is next, what changed. The board and the side rail are warm-black housings, the fixed hardware of the room; the work areas sit on a light ground tinted faintly toward ruby. Information is set on a strict grid of tabular digits, so a glance between customers is enough.\n\nThe system is sober and dense without being crowded. Color is spent only on meaning: ruby marks what is now and what the owner can act on; amber marks what is unsettled and stays lit until the owner says they have seen it. Everything else is warm neutral. Sections below the board are ruled, not boxed: a heavy foreground rule opens each one, hairlines separate rows, and the ground shows through.\n\nThe panel refuses the generic SaaS dashboard: no KPI-card grid, no blue or green status palette, no WhatsApp green.",
+    "overview": "Ruby's panel reads the owner's day the way a clinic waiting room reads its call-number board: what is happening now, who is next, what changed. Ruby is dark-only. The work areas sit on a warm-black ground tinted faintly toward ruby; the side rail and the call board are the fixed hardware of the room, set one step deeper than the ground. Information is set on a strict grid of tabular digits, so a glance between customers is enough.\n\nThe system is sober and dense without being crowded. Color is spent only on meaning: ruby marks what is now and what the owner can act on; amber marks an appointment that is not yet settled, and a change stays lit until the owner says they have seen it. Everything else is warm neutral. Sections below the board are ruled, not boxed: a heavy foreground rule opens each one, hairlines separate rows, and the ground shows through.\n\nThe panel refuses the generic SaaS dashboard: no KPI-card grid, no blue or green status palette, no WhatsApp green.",
     "keyCharacteristics": [
-      "Warm-black housing (rail, call board) against a light ruby-tinted ground.",
-      "Ruby as the single accent; amber as the single change signal.",
+      "Dark-only: a warm-black ruby-tinted ground, with the rail and call board recessed one step deeper.",
+      "Ruby as the single accent, split by job: a deep fill for buttons and badges, a lit tone for ruby text.",
+      "Amber as the single signal for an unsettled appointment.",
       "Every clock time in Chivo Mono tabular figures.",
       "Ruled sections with hairline rows instead of cards.",
-      "Depth from tone, not shadow; one soft drop under the call board."
+      "Depth from tone and hairlines only; no shadows anywhere."
     ],
     "rules": [
       {
@@ -484,8 +593,13 @@
         "section": "colors"
       },
       {
+        "name": "The Fill or Text Rule",
+        "body": "Ruby as a fill behind white text uses primary; ruby as text on the dark ground uses link. Never set primary as text color, never fill with link.",
+        "section": "colors"
+      },
+      {
         "name": "The Held Lamp Rule",
-        "body": "Amber is the only change signal, and a change stays lit (surface, lamp, text) until the owner marks it seen. Nothing else uses amber.",
+        "body": "Amber means an appointment is not settled: awaiting confirmation (amber text) or changed (surface, lamp, text). A change stays lit until the owner marks it seen. Nothing else uses amber.",
         "section": "colors"
       },
       {
@@ -504,6 +618,11 @@
         "section": "typography"
       },
       {
+        "name": "The Recess Rule",
+        "body": "Fixed hardware (rail, call board) goes darker than the ground, never lighter, and is separated by tone or a 1px white-alpha line. The system has no shadows.",
+        "section": "elevation"
+      },
+      {
         "name": "The No Halo Rule",
         "body": "No zero-offset glows or colored halos. Lit Ruby on the board is a text and lamp color, never a box-shadow.",
         "section": "elevation"
@@ -511,20 +630,25 @@
     ],
     "dos": [
       "**Do** keep ruby for \"now\" and for actions the owner can take; one ruby voice per decision.",
+      "**Do** use primary for ruby fills with white text and link for ruby text.",
+      "**Do** use amber for unsettled appointments: amber text while awaiting confirmation, the held surface for a change.",
       "**Do** hold a changed appointment's amber surface, lamp and text until the owner presses \"Marcar como visto\".",
       "**Do** set every clock time, duration and count in Chivo Mono tabular figures, including times inside sentences.",
-      "**Do** open sections below the call board with a 2px ink rule and separate rows with hairlines on the tinted ground.",
-      "**Do** house the rail and the call board in warm black; keep work areas on the light ruby-tinted ground.",
+      "**Do** open sections below the call board with a 2px ink rule at 70% and separate rows with hairlines on the ground.",
+      "**Do** set the rail and the call board one step deeper than the ground, edged by tone or a 1px white-alpha line.",
       "**Do** keep the rail's active mark at 1px.",
       "**Do** disable call-advance and call-lamp under prefers-reduced-motion."
     ],
     "donts": [
+      "**Don't** add a light theme or a light ground; Ruby is dark-only.",
+      "**Don't** set primary as a text color on the dark ground.",
       "**Don't** use blue or green for status, and never WhatsApp green.",
       "**Don't** use amber for anything except unsettled appointments.",
       "**Don't** wrap sections below the board in cards or bordered boxes.",
-      "**Don't** add zero-offset glows or colored halos.",
+      "**Don't** add shadows, zero-offset glows or colored halos.",
       "**Don't** add eyebrow or kicker labels above headings.",
       "**Don't** thicken the nav active mark beyond 1px.",
+      "**Don't** redraw the brand gem; use the supplied artwork.",
       "**Don't** build a KPI-card grid on Início."
     ]
   }

@@ -24,7 +24,7 @@ function InicioSkeleton() {
       className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-10 lg:py-8"
     >
       <div className="mb-6 h-9 w-72 animate-pulse rounded-md bg-muted" />
-      <div className="h-72 rounded-xl bg-board" />
+      <div className="h-72 rounded-xl border border-board-line bg-board" />
       <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="h-96 animate-pulse rounded-md bg-muted" />
         <div className="h-96 animate-pulse rounded-md bg-muted" />
@@ -35,7 +35,7 @@ function InicioSkeleton() {
 
 // Ruled section heading on the ground, continuing the call board's grammar.
 const sectionHead =
-  "flex items-baseline justify-between gap-3 border-b-2 border-foreground pb-3";
+  "flex items-baseline justify-between gap-3 border-b-2 border-foreground/70 pb-3";
 
 async function Inicio() {
   await io();
@@ -133,7 +133,7 @@ async function Inicio() {
             </h2>
             <Link
               href="/plano"
-              className="text-sm font-medium text-primary hover:underline"
+              className="text-sm font-medium text-link hover:underline"
             >
               Ver plano
             </Link>
