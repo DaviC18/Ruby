@@ -17,6 +17,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Wordmark } from "./wordmark";
 
 const NAV = [
   { href: "/inicio", label: "Início", icon: House },
@@ -33,23 +34,6 @@ const NAV = [
     match: "/configuracoes",
   },
 ];
-
-function Wordmark() {
-  return (
-    <span className="flex items-center gap-2.5 text-sidebar-foreground">
-      <svg viewBox="0 0 24 24" aria-hidden="true" className="size-6">
-        <path d="M6 3h12l4 6-10 12L2 9z" fill="var(--sidebar-primary)" />
-        <path
-          d="M2 9h20M8 3l4 6 4-6M12 9v12"
-          stroke="oklch(0.19 0.012 20 / 0.45)"
-          strokeWidth="1.2"
-          fill="none"
-        />
-      </svg>
-      <span className="text-lg font-semibold tracking-tight">Ruby</span>
-    </span>
-  );
-}
 
 export function Sidebar({
   businessName,
