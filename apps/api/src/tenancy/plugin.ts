@@ -14,7 +14,7 @@ export const TENANT_HEADER = "x-tenant-id";
 
 // Canonical UUID text form. Anything else cannot be a tenant id, and passing it
 // to Postgres would raise "invalid input syntax for type uuid" (a 500).
-const UUID_RE =
+export const UUID_RE =
 	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 /** Decorates every request with `tenant: null`; `requireTenant` fills it. */
