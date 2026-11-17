@@ -6,7 +6,24 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": [
+			"**",
+			"!**/migrations",
+			"!**/.next",
+			"!**/dist",
+			"!**/node_modules",
+			"!**/coverage",
+			"!**/.turbo",
+			"!**/test-results",
+			"!**/playwright-report",
+			"!**/.superpowers",
+			"!**/.claude",
+			"!**/.agents",
+			"!**/.impeccable",
+			"!skills-lock.json",
+			"!**/*.md"
+		]
 	},
 	"formatter": {
 		"enabled": true,

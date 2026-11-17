@@ -1,1 +1,18 @@
 node_modules
+
+# build / tooling output
+.next
+dist
+coverage
+.turbo
+test-results
+playwright-report
+
+# env
+.env
+.env.*
+!.env.example
+
+# agent workspaces
+.superpowers/
+.claude/worktrees/

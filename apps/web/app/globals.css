@@ -59,23 +59,22 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Ruby: neutrals tinted toward the ruby hue (h≈18); ruby is the primary. */
 /* Ruby is dark-only: warm-black ground tinted toward the ruby hue (h≈18).
    The rail and call board sit one step deeper than the ground. */
 :root {
-  --background: oklch(0.165 0.01 20);
+  --background: oklch(0.115 0.005 20);
   --foreground: oklch(0.94 0.006 20);
-  --card: oklch(0.2 0.012 20);
+  --card: oklch(0.155 0.007 20);
   --card-foreground: oklch(0.94 0.006 20);
-  --popover: oklch(0.21 0.012 20);
+  --popover: oklch(0.165 0.007 20);
   --popover-foreground: oklch(0.94 0.006 20);
   --primary: oklch(0.55 0.2 20);
   --primary-foreground: oklch(0.985 0.004 20);
-  --secondary: oklch(0.24 0.012 20);
+  --secondary: oklch(0.19 0.008 20);
   --secondary-foreground: oklch(0.94 0.006 20);
-  --muted: oklch(0.24 0.012 20);
+  --muted: oklch(0.19 0.008 20);
   --muted-foreground: oklch(0.72 0.012 20);
-  --accent: oklch(0.25 0.045 18);
+  --accent: oklch(0.2 0.05 18);
   --accent-foreground: oklch(0.9 0.06 18);
   --link: oklch(0.74 0.16 22);
   --destructive: oklch(0.7 0.18 25);
@@ -90,17 +89,17 @@
   --radius: 0.5rem;
 
   /* Housing of the call board and the side rail. */
-  --sidebar: oklch(0.125 0.008 20);
+  --sidebar: oklch(0.085 0.004 20);
   --sidebar-foreground: oklch(0.93 0.008 20);
   --sidebar-muted: oklch(0.7 0.012 20);
   --sidebar-primary: oklch(0.68 0.2 22);
   --sidebar-primary-foreground: oklch(0.985 0.004 20);
-  --sidebar-accent: oklch(0.21 0.016 20);
+  --sidebar-accent: oklch(0.16 0.01 20);
   --sidebar-accent-foreground: oklch(0.97 0.006 20);
   --sidebar-border: oklch(1 0 0 / 8%);
   --sidebar-ring: oklch(0.68 0.2 22);
 
-  --board: oklch(0.12 0.008 20);
+  --board: oklch(0.08 0.004 20);
   --board-foreground: oklch(0.95 0.006 20);
   --board-muted: oklch(0.72 0.012 20);
   --board-line: oklch(1 0 0 / 9%);
@@ -108,7 +107,7 @@
 
   /* A change (remarcado/cancelado) stays lit until the owner marks it seen. */
   --changed: oklch(0.78 0.14 75);
-  --changed-surface: oklch(0.26 0.045 70);
+  --changed-surface: oklch(0.21 0.045 70);
   --changed-foreground: oklch(0.86 0.11 80);
 }
 

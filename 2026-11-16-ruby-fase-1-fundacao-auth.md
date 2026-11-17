@@ -12,6 +12,8 @@
 
 ## Global Constraints
 
+- **Commits são feitos pelo Davi.** Nenhum agente roda `git add`, `git commit`, `git push` ou altera branches. Cada task termina com as mudanças no working tree.
+
 - Interface do usuário em **português (pt-BR)**; código, nomes de arquivos e identificadores em inglês.
 - TypeScript `strict: true` em todos os pacotes; `tsc --noEmit` sem erros.
 - Biome sem erros (`pnpm biome check .`) antes de cada commit.
@@ -94,10 +96,10 @@ ruby/
 **Interfaces:**
 - Produces: scripts raiz `pnpm dev | build | test | lint | typecheck | db:up | db:down`; Postgres dev em `postgres://ruby:ruby@localhost:5432/ruby`, teste em `postgres://ruby:ruby@localhost:5433/ruby_test`.
 
-- [ ] **Step 1:** `git init`; criar arquivos acima. `pnpm-workspace.yaml` com `apps/*` e `packages/*`. `turbo.json` com pipelines `build`, `dev` (persistent, sem cache), `test`, `lint`, `typecheck`. `biome.json` com formatter (2 espaços, aspas duplas) e linter recomendado; ignorar `**/migrations/**`, `.next`, `dist`.
+- [ ] **Step 1:** Criar arquivos acima (repo git já existe; não rodar `git init`). `pnpm-workspace.yaml` com `apps/*` e `packages/*`. `turbo.json` com pipelines `build`, `dev` (persistent, sem cache), `test`, `lint`, `typecheck`. `biome.json` com formatter (2 espaços, aspas duplas) e linter recomendado; ignorar `**/migrations/**`, `.next`, `dist`.
 - [ ] **Step 2:** `docker-compose.yml` com dois serviços `postgres:16`: `db` (5432, volume) e `db_test` (5433, tmpfs).
 - [ ] **Step 3:** Verificar: `pnpm install && pnpm db:up && docker compose ps` → ambos `healthy`; `pnpm biome check .` → sem erros.
-- [ ] **Step 4: Commit** `chore: bootstrap monorepo (pnpm, turbo, biome, docker)`
+- [ ] **Step 4: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `chore: bootstrap monorepo (pnpm, turbo, biome, docker)`.
 
 ---
 
@@ -146,7 +148,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 2:** `pnpm --filter @ruby/shared test` → FAIL (módulos inexistentes).
 - [ ] **Step 3:** Implementar. Timezone válido = `Intl.supportedValuesOf("timeZone").includes(tz)`. Sobreposição via `superRefine` após ordenar por `open`.
 - [ ] **Step 4:** Testes → PASS.
-- [ ] **Step 5: Commit** `feat(shared): plans and core zod schemas`
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(shared): plans and core zod schemas`.
 
 ---
 
@@ -167,7 +169,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 2:** Rodar → FAIL.
 - [ ] **Step 3:** Escrever schema; `pnpm db:generate` gera migração em `src/migrations`. (A tabela `user` vem na Task 5; aqui crie `membership.user_id` como `text` e adicione a FK na migração da Task 5.)
 - [ ] **Step 4:** Teste → PASS.
-- [ ] **Step 5: Commit** `feat(db): tenant, membership, business_hours, service schema`
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(db): tenant, membership, business_hours, service schema`.
 
 ---
 
@@ -189,7 +191,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3:** Implementar.
 - [ ] **Step 4:** PASS; `pnpm --filter @ruby/api dev` responde em `/health`.
-- [ ] **Step 5: Commit** `feat(api): fastify base, env validation, health`
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(api): fastify base, env validation, health`.
 
 ---
 
@@ -217,7 +219,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3:** Implementar; gerar schema de auth; migração adicionando FK `membership.user_id → user.id`. Criar `GET /v1/me`.
 - [ ] **Step 4:** PASS.
-- [ ] **Step 5: Commit** `feat(api): better-auth with google and email/password`
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(api): better-auth with google and email/password`.
 
 ---
 
@@ -244,7 +246,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3:** Implementar (a rota `/v1/services` de teste pode ser stub até a Task 7; o teste de isolamento é repetido na Task 7 com dados reais).
 - [ ] **Step 4:** PASS.
-- [ ] **Step 5: Commit** `feat(api): tenant creation and tenancy isolation`
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(api): tenant creation and tenancy isolation`.
 
 ---
 
@@ -271,7 +273,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3:** Implementar.
 - [ ] **Step 4:** PASS.
-- [ ] **Step 5: Commit** `feat(api): business hours and services`
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(api): business hours and services`.
 
 ---
 
@@ -293,7 +295,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 3:** FAIL.
 - [ ] **Step 4:** Implementar com componentes shadcn (Form + Zod).
 - [ ] **Step 5:** PASS; rodar `web-design-guidelines` nas duas telas e corrigir achados.
-- [ ] **Step 6: Commit** `feat(web): auth screens`
+- [ ] **Step 6: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(web): auth screens`.
 
 ---
 
@@ -319,7 +321,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3:** Implementar.
 - [ ] **Step 4:** PASS.
-- [ ] **Step 5: Commit** `feat(web): route protection, onboarding and dashboard shell`
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(web): route protection, onboarding and dashboard shell`.
 
 ---
 
@@ -339,7 +341,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3:** Implementar. Preço digitado em reais, enviado em centavos.
 - [ ] **Step 4:** PASS; rodar `/audit` do Impeccable e `web-design-guidelines`; corrigir.
-- [ ] **Step 5: Commit** `feat(web): business hours and services settings`
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(web): business hours and services settings`.
 
 ---
 
@@ -351,4 +353,4 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 1:** CI: Postgres service 16, `pnpm install --frozen-lockfile`, `pnpm biome check .`, `pnpm typecheck`, `pnpm test`, `pnpm --filter @ruby/web exec playwright test`.
 - [ ] **Step 2:** Rodar localmente toda a sequência → tudo verde (usar `superpowers:verification-before-completion`).
 - [ ] **Step 3:** `superpowers:requesting-code-review` na branch inteira.
-- [ ] **Step 4: Commit** `chore: ci and readme`
+- [ ] **Step 4: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `chore: ci and readme`.

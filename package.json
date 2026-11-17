@@ -1,12 +1,26 @@
 {
-  "devDependencies": {
-    "@biomejs/biome": "^2.6.8",
-    "@types/node": "^26.6.6",
-    "turbo": "^2.11.11",
-    "typescript": "^7.0.2"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+	"name": "ruby",
+	"private": true,
+	"packageManager": "npm@11.19.1",
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"scripts": {
+		"dev": "turbo run dev",
+		"build": "turbo run build",
+		"test": "turbo run test --concurrency=1",
+		"lint": "turbo run lint",
+		"typecheck": "turbo run typecheck",
+		"db:up": "docker compose up -d --wait",
+		"db:down": "docker compose down",
+		"db:generate": "npm run db:generate -w @ruby/db",
+		"db:migrate": "npm run db:migrate -w @ruby/db"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.6.8",
+		"@types/node": "^26.6.6",
+		"turbo": "^2.11.11",
+		"typescript": "^7.0.2"
+	}
 }
