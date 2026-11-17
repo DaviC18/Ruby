@@ -1,5 +1,6 @@
 import { fileURLToPath } from "node:url";
 import { createDb, type Db } from "@ruby/db";
+import type { TenantDto } from "@ruby/shared";
 import { sql } from "drizzle-orm";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import type { FastifyInstance } from "fastify";
@@ -79,4 +80,22 @@ export async function signUpAndLogin(
 			: [];
 	const cookie = cookies.map((c) => c.split(";")[0]).join("; ");
 	return { cookie, userId: res.json().user.id };
+}
+
+/** Creates a tenant named `name` through POST /v1/tenants as the user behind `cookie`. */
+export async function createTenantFor(
+	app: FastifyInstance,
+	cookie: string,
+	name: string,
+): Promise<TenantDto> {
+	const res = await app.inject({
+		method: "POST",
+		url: "/v1/tenants",
+		headers: { cookie },
+		payload: { name },
+	});
+	if (res.statusCode !== 201) {
+		throw new Error(`create tenant failed (${res.statusCode}): ${res.body}`);
+	}
+	return res.json();
 }

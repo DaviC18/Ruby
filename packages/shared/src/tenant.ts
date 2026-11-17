@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { PlanId } from "./plans";
 
 const timeZones = new Set(Intl.supportedValuesOf("timeZone"));
 
@@ -13,3 +14,20 @@ export const createTenantInput = z.object({
 });
 
 export type CreateTenantInput = z.infer<typeof createTenantInput>;
+
+const PLAN_IDS = [
+	"free",
+	"pro",
+	"business",
+] as const satisfies readonly PlanId[];
+
+/** Tenant as returned by the API (`POST /v1/tenants`, `GET /v1/tenants`). */
+export const tenantDto = z.object({
+	id: z.string(),
+	name: z.string(),
+	slug: z.string(),
+	timezone: z.string(),
+	planId: z.enum(PLAN_IDS),
+});
+
+export type TenantDto = z.infer<typeof tenantDto>;

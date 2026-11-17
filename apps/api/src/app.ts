@@ -7,6 +7,8 @@ import { ZodError } from "zod";
 import { createAuth } from "./auth/auth";
 import { registerAuth, requireAuth } from "./auth/plugin";
 import type { Env } from "./env";
+import { tenantRoutes } from "./modules/tenants/routes";
+import { registerTenancy, requireTenant } from "./tenancy/plugin";
 
 declare module "fastify" {
 	interface FastifyInstance {
@@ -46,6 +48,17 @@ export async function buildApp({ db, env }: AppDeps): Promise<FastifyInstance> {
 		const { id, email, name } = request.session.user;
 		return { id, email, name };
 	});
+
+	registerTenancy(app);
+	await app.register(tenantRoutes);
+
+	// Stub until Task 7 implements the services module; it exists so the
+	// tenancy isolation test runs through requireAuth + requireTenant.
+	app.get(
+		"/v1/services",
+		{ preHandler: [requireAuth, requireTenant] },
+		async () => [],
+	);
 
 	return app;
 }
