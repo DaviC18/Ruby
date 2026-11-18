@@ -17,13 +17,18 @@
 		"@ruby/db": "^1.0.0",
 		"@ruby/shared": "^1.0.0",
 		"better-auth": "^1.7.25",
+		"dotenv": "^17.4.2",
 		"fastify": "^5.12.8",
+		"pg": "^8.23.1",
 		"pg-boss": "^12.38.2",
+		"pino": "^10.4.0",
 		"stripe": "^23.1.0",
 		"zod": "^4.6.7"
 	},
 	"devDependencies": {
-		"drizzle-orm": "^0.45.4",
+		"@types/pg": "^8.23.1",
+		"drizzle-kit": "^1.0.0-rc.5",
+		"drizzle-orm": "^1.0.0-rc.5",
 		"tsx": "^4.23.15",
 		"vitest": "^5.1.0"
 	}

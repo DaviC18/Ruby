@@ -4,25 +4,38 @@
 
 **Goal:** Monorepo funcionando com Postgres local, API Fastify com Better Auth (Google + e-mail/senha), criação de negócio (tenant) com isolamento de dados, e painel Next.js com login, onboarding inicial e configuração de horários e serviços.
 
-**Architecture:** Monorepo pnpm + Turborepo. `apps/api` (Fastify) é a única porta para o banco; `apps/web` (Next.js) consome a API com cookies de sessão do Better Auth. `packages/db` tem o schema Drizzle; `packages/shared` tem schemas Zod e constantes usados por ambos. Toda tabela de negócio carrega `tenant_id` e é acessada por repositórios que exigem `tenantId`.
+**Architecture:** Monorepo npm workspaces + Turborepo. `apps/api` (Fastify) é a única porta para o banco; `apps/web` (Next.js) consome a API com cookies de sessão do Better Auth. `packages/db` tem o schema Drizzle; `packages/shared` tem schemas Zod e constantes usados por ambos. Toda tabela de negócio carrega `tenant_id` e é acessada por repositórios que exigem `tenantId`.
 
-**Tech Stack:** pnpm, Turborepo, TypeScript (strict), Biome, Docker Compose (Postgres 16), Drizzle ORM + drizzle-kit, Zod, Fastify 5, Better Auth, Next.js (App Router), React, Tailwind, shadcn/ui, Vitest, Playwright.
+**Tech Stack:** npm workspaces, Turborepo, TypeScript (strict), Biome, Docker Compose (Postgres 16), Drizzle ORM + drizzle-kit **1.0.0-rc.5**, Zod 4, Fastify 5, Better Auth 1.7, Next.js 16 (App Router), React 19, Tailwind, shadcn/ui, Vitest, Playwright.
 
-**Spec:** `docs/superpowers/specs/2026-11-16-ruby-design.md`
+**Spec:** `docs/specs/2026-11-16-ruby-design.md` (ver 8.1 "Versões fixadas" e "Regras do Drizzle 1.0", e 8.7 "Reaproveitamento do Mariana-Core")
+
+## Status (2026-11-18)
+
+| Task | Status |
+|---|---|
+| 1–7 | Concluídas |
+| **7.1** (correção Drizzle 1.0) | **Pendente — fazer antes de seguir** |
+| 8 | Em andamento (telas de login e cadastro existem; falta E2E verde e `web-design-guidelines`) |
+| 9 | Parcial (`onboarding` e `(painel)/inicio` existem com `lib/demo-data.ts`; faltam `proxy.ts`, `current-tenant` e E2E) |
+| 10–11 | Pendentes |
 
 ## Global Constraints
 
-- **Commits são feitos pelo Davi.** Nenhum agente roda `git add`, `git commit`, `git push` ou altera branches. Cada task termina com as mudanças no working tree.
+- **Commits são feitos pelo Davi.** Nenhum agente roda `git add`, `git commit`, `git push` ou altera branches. Cada task termina com as mudanças no working tree e o agente para até o Davi confirmar o commit.
+- **npm** é o gerenciador: `npm run <script> -w @ruby/<pacote>`; todos os pacotes: `--workspaces --if-present`.
+- **Drizzle 1.0.0-rc.5 em todos os workspaces**, sem exceção. Relações só com `defineRelations()` em `packages/db/src/schema/relations.ts`; cliente com `drizzle({ client, relations })`.
+- Web sem `src/`: rotas em `apps/web/app`, utilitários em `apps/web/lib`, componentes em `apps/web/components`.
 
 - Interface do usuário em **português (pt-BR)**; código, nomes de arquivos e identificadores em inglês.
 - TypeScript `strict: true` em todos os pacotes; `tsc --noEmit` sem erros.
-- Biome sem erros (`pnpm biome check .`) antes de cada commit.
+- Biome sem erros (`npx biome check .`) antes de cada commit.
 - Todo horário armazenado em **UTC**; cada tenant tem `timezone` (default `America/Sao_Paulo`).
 - Toda tabela de negócio tem coluna `tenant_id` não nula; nenhuma query de negócio sem `tenantId`.
 - Validação de toda entrada HTTP com Zod (schemas em `packages/shared`).
 - Segredos só via env; `.env.example` versionado; nunca commitar `.env`.
 - Login: Better Auth com **Google** e **e-mail/senha**. O login com Google pede só escopos de identidade (`openid email profile`); Calendar/Drive ficam para a Fase 4 (passo separado).
-- Skills: `better-auth` para auth; `next-best-practices`, `vercel-react-best-practices`, `shadcn` e `impeccable` no web; `web-design-guidelines` antes de concluir cada tela.
+- Skills: `better-auth` para auth; `vercel-react-best-practices`, `shadcn` e `impeccable` no web; `web-design-guidelines` antes de concluir cada tela.
 - Constantes de plano (Free 30 / Pro R$90 300 / Empresarial R$300 1.500 atendimentos/mês) em `packages/shared/src/plans.ts`.
 
 ## Review Focus
@@ -40,7 +53,7 @@
 ```
 ruby/
 ├─ package.json                 scripts raiz (dev, build, test, lint, typecheck)
-├─ pnpm-workspace.yaml
+├─ (workspaces no package.json raiz)
 ├─ turbo.json
 ├─ biome.json
 ├─ docker-compose.yml           postgres:16 (dev 5432, test 5433)
@@ -58,6 +71,7 @@ ruby/
 │     ├─ schema/auth.ts         tabelas Better Auth (geradas)
 │     ├─ schema/tenant.ts       tenant, membership
 │     ├─ schema/business.ts     business_hours, service
+│     ├─ schema/relations.ts    defineRelations (Drizzle 1.0)
 │     ├─ schema/index.ts
 │     └─ migrations/
 ├─ apps/
@@ -72,17 +86,17 @@ ruby/
 │  │  ├─ modules/business-hours/{routes,repo}.ts
 │  │  ├─ modules/services/{routes,repo}.ts
 │  │  └─ test/helpers.ts        testDb(), signUpAndLogin(), createTenantFor()
-│  └─ web/
-│     ├─ src/lib/api.ts         apiFetch<T>()
-│     ├─ src/lib/auth-client.ts createAuthClient (better-auth/react)
-│     ├─ src/middleware.ts      proteção de rotas
-│     ├─ src/app/(auth)/entrar/page.tsx
-│     ├─ src/app/(auth)/cadastro/page.tsx
-│     ├─ src/app/onboarding/page.tsx
-│     ├─ src/app/(painel)/layout.tsx
-│     ├─ src/app/(painel)/inicio/page.tsx
-│     ├─ src/app/(painel)/configuracoes/horarios/page.tsx
-│     ├─ src/app/(painel)/configuracoes/servicos/page.tsx
+│  └─ web/                    (sem src/: app/, lib/, components/)
+│     ├─ lib/api.ts         apiFetch<T>()
+│     ├─ lib/auth-client.ts createAuthClient (better-auth/react)
+│     ├─ proxy.ts            proteção de rotas (Next 16: antigo middleware.ts)
+│     ├─ app/(auth)/entrar/page.tsx
+│     ├─ app/(auth)/cadastro/page.tsx
+│     ├─ app/onboarding/page.tsx
+│     ├─ app/(painel)/layout.tsx
+│     ├─ app/(painel)/inicio/page.tsx
+│     ├─ app/(painel)/configuracoes/horarios/page.tsx
+│     ├─ app/(painel)/configuracoes/servicos/page.tsx
 │     └─ e2e/*.spec.ts
 ```
 
@@ -91,15 +105,15 @@ ruby/
 ### Task 1: Monorepo, ferramentas e Postgres local
 
 **Files:**
-- Create: `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `biome.json`, `docker-compose.yml`, `.env.example`, `.gitignore`, `packages/config/tsconfig.base.json`, `packages/config/package.json`
+- Create: `package.json` (com `workspaces`), `turbo.json`, `biome.json`, `docker-compose.yml`, `.env.example`, `.gitignore`, `packages/config/tsconfig.base.json`, `packages/config/package.json`
 
 **Interfaces:**
-- Produces: scripts raiz `pnpm dev | build | test | lint | typecheck | db:up | db:down`; Postgres dev em `postgres://ruby:ruby@localhost:5432/ruby`, teste em `postgres://ruby:ruby@localhost:5433/ruby_test`.
+- Produces: scripts raiz `npm run dev | build | test | lint | typecheck | db:up | db:down`; Postgres dev em `postgres://ruby:ruby@localhost:5432/ruby`, teste em `postgres://ruby:ruby@localhost:5433/ruby_test`.
 
-- [ ] **Step 1:** Criar arquivos acima (repo git já existe; não rodar `git init`). `pnpm-workspace.yaml` com `apps/*` e `packages/*`. `turbo.json` com pipelines `build`, `dev` (persistent, sem cache), `test`, `lint`, `typecheck`. `biome.json` com formatter (2 espaços, aspas duplas) e linter recomendado; ignorar `**/migrations/**`, `.next`, `dist`.
+- [ ] **Step 1:** Criar arquivos acima (repo git já existe; não rodar `git init`). `workspaces` no `package.json` raiz com `apps/*` e `packages/*`. `turbo.json` com pipelines `build`, `dev` (persistent, sem cache), `test`, `lint`, `typecheck`. `biome.json` com formatter (2 espaços, aspas duplas) e linter recomendado; ignorar `**/migrations/**`, `.next`, `dist`.
 - [ ] **Step 2:** `docker-compose.yml` com dois serviços `postgres:16`: `db` (5432, volume) e `db_test` (5433, tmpfs).
-- [ ] **Step 3:** Verificar: `pnpm install && pnpm db:up && docker compose ps` → ambos `healthy`; `pnpm biome check .` → sem erros.
-- [ ] **Step 4: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `chore: bootstrap monorepo (pnpm, turbo, biome, docker)`.
+- [ ] **Step 3:** Verificar: `npm install && npm run db:up && docker compose ps` → ambos `healthy`; `npx biome check .` → sem erros.
+- [ ] **Step 4: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Parar e aguardar o Davi commitar com a mensagem sugerida `chore: bootstrap monorepo (npm, turbo, biome, docker)`.
 
 ---
 
@@ -145,10 +159,10 @@ test("timezone inválido", () => expect(createTenantInput.safeParse({ name: "Bar
 test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia X" }).timezone).toBe("America/Sao_Paulo"));
 ```
 
-- [ ] **Step 2:** `pnpm --filter @ruby/shared test` → FAIL (módulos inexistentes).
+- [ ] **Step 2:** `npm test -w @ruby/shared` → FAIL (módulos inexistentes).
 - [ ] **Step 3:** Implementar. Timezone válido = `Intl.supportedValuesOf("timeZone").includes(tz)`. Sobreposição via `superRefine` após ordenar por `open`.
 - [ ] **Step 4:** Testes → PASS.
-- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(shared): plans and core zod schemas`.
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Parar e aguardar o Davi commitar com a mensagem sugerida `feat(shared): plans and core zod schemas`.
 
 ---
 
@@ -160,16 +174,16 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 
 **Interfaces:**
 - Produces:
-  - `createDb(url: string): Db` (drizzle + `postgres` driver); `type Db`
+  - `createDb(url: string): Db` = `drizzle({ client: postgres(url), relations })` (sintaxe do Drizzle 1.0); `type Db = ReturnType<typeof createDb>`
   - Tabelas: `tenant(id uuid pk, name text, slug text unique, timezone text, plan_id text default 'free', created_at timestamptz)`; `membership(id, tenant_id fk, user_id text fk→user.id, role text 'owner', unique(tenant_id,user_id))`; `business_hours(id, tenant_id fk, weekday smallint, open time, close time)`; `service(id, tenant_id fk, name, duration_min int, price_brl_cents int null, modality text, active bool default true, created_at)`
   - Índice em `tenant_id` em todas as tabelas de negócio; `on delete cascade` a partir de `tenant`.
   - Scripts: `db:generate`, `db:migrate` (lê `DATABASE_URL`).
 
 - [ ] **Step 1: Teste que falha** — contra `DATABASE_URL` de teste: rodar migrações, inserir tenant + service, deletar tenant e esperar `service` vazio (cascade); inserir `membership` duplicado (mesmo tenant/user) e esperar erro de unicidade.
 - [ ] **Step 2:** Rodar → FAIL.
-- [ ] **Step 3:** Escrever schema; `pnpm db:generate` gera migração em `src/migrations`. (A tabela `user` vem na Task 5; aqui crie `membership.user_id` como `text` e adicione a FK na migração da Task 5.)
+- [ ] **Step 3:** Escrever schema; `npm run db:generate -w @ruby/db` gera migração em `src/migrations`. (A tabela `user` vem na Task 5; aqui crie `membership.user_id` como `text` e adicione a FK na migração da Task 5.)
 - [ ] **Step 4:** Teste → PASS.
-- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(db): tenant, membership, business_hours, service schema`.
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Parar e aguardar o Davi commitar com a mensagem sugerida `feat(db): tenant, membership, business_hours, service schema`.
 
 ---
 
@@ -190,8 +204,8 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 1: Testes que falham** — `GET /health` → 200 `{status:"ok"}`; rota de teste que faz `schema.parse` inválido → 400 com `error: "validation"`; `loadEnv` sem `BETTER_AUTH_SECRET` lança.
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3:** Implementar.
-- [ ] **Step 4:** PASS; `pnpm --filter @ruby/api dev` responde em `/health`.
-- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(api): fastify base, env validation, health`.
+- [ ] **Step 4:** PASS; `npm run dev -w @ruby/api` responde em `/health`.
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Parar e aguardar o Davi commitar com a mensagem sugerida `feat(api): fastify base, env validation, health`.
 
 ---
 
@@ -205,7 +219,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 **Interfaces:**
 - Consumes: `buildApp`, `Db`, `Env`
 - Produces:
-  - `createAuth(db: Db, env: Env)` — `betterAuth({ database: drizzleAdapter(db, { provider: "pg" }), emailAndPassword: { enabled: true, minPasswordLength: 8 }, socialProviders: { google: { clientId, clientSecret, scope: ["openid","email","profile"] } }, account: { accountLinking: { enabled: true, trustedProviders: ["google"] } }, trustedOrigins: [env.WEB_URL], baseURL: env.API_URL, basePath: "/auth" })`
+  - `createAuth(db: Db, env: Env)` — `betterAuth({ database: drizzleAdapter(db, { provider: "pg", schema }), emailAndPassword: { enabled: true, minPasswordLength: 8 }, socialProviders: { google: { clientId, clientSecret, scope: ["openid","email","profile"] } }, account: { accountLinking: { enabled: true, trustedProviders: ["google"] } }, trustedOrigins: [env.WEB_URL], baseURL: env.API_URL, basePath: "/auth" })`
   - Rotas `/auth/*` montadas via bridge Fastify → `Request` Web (`auth.handler(webRequest)`)
   - Decorator `request.session: { user: { id: string; email: string; name: string } } | null` (via `auth.api.getSession({ headers })` em `onRequest`)
   - Hook `requireAuth` → 401 `{ error: "unauthorized" }`
@@ -217,9 +231,36 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
   - senha com 7 caracteres → 400
   - **Review Focus #2:** criar usuário por senha com `ana@x.com`; simular callback do Google para o mesmo e-mail (usar `auth.api` interno ou mock do provider) → `user` count = 1 e `account` count = 2
 - [ ] **Step 2:** FAIL.
-- [ ] **Step 3:** Implementar; gerar schema de auth; migração adicionando FK `membership.user_id → user.id`. Criar `GET /v1/me`.
+- [ ] **Step 3:** Implementar; gerar schema de auth; **apagar os blocos `relations()` que o CLI gera no `auth.ts`** (não existem no Drizzle 1.0, ver Task 7.1); migração adicionando FK `membership.user_id → user.id`. Criar `GET /v1/me`.
 - [ ] **Step 4:** PASS.
-- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(api): better-auth with google and email/password`.
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Parar e aguardar o Davi commitar com a mensagem sugerida `feat(api): better-auth with google and email/password`.
+
+---
+
+### Task 7.1: Correção — alinhar Drizzle 1.0 e relações (fazer antes da Task 8 continuar)
+
+**Contexto:** `@ruby/db` estava com Drizzle 0.45/kit 0.31 e `@ruby/api` com 1.0.0-rc.5. Após alinhar para 1.0.0-rc.5 e rodar `npx drizzle-kit up`, todos os testes de `api` e `db` quebram com `TypeError: relations is not a function` em `packages/db/src/schema/auth.ts`.
+
+**Files:**
+- Modify: `packages/db/src/schema/auth.ts` (remover `import { relations }` e `userRelations`, `sessionRelations`, `accountRelations`)
+- Create: `packages/db/src/schema/relations.ts`
+- Modify: `packages/db/src/schema/index.ts` (`export * from "./relations"`), `packages/db/src/client.ts`, `apps/api/src/auth/auth.ts`
+
+**Interfaces:**
+- Produces: `relations = defineRelations({ user, session, account, verification, tenant, membership, businessHours, service }, (r) => ({ ... }))` com:
+  - `user`: `sessions`, `accounts`, `memberships` (`r.many`)
+  - `session.user`, `account.user`: `r.one.user({ from: <tabela>.userId, to: r.user.id })`
+  - `tenant`: `memberships`, `businessHours`, `services` (`r.many`)
+  - `membership.tenant`, `membership.user`, `businessHours.tenant`, `service.tenant`: `r.one` por `tenantId` / `userId`
+  - (usar os nomes de export reais das tabelas)
+- `createDb` passa a `drizzle({ client, relations })`; `drizzleAdapter(db, { provider: "pg", schema })`
+
+- [ ] **Step 1:** Confirmar a falha: `npm test --workspaces --if-present` → 7 suítes com `relations is not a function`.
+- [ ] **Step 2:** Aplicar as mudanças acima.
+- [ ] **Step 3:** `npm ls drizzle-orm drizzle-kit --workspaces --depth=0` → somente `1.0.0-rc.5`.
+- [ ] **Step 4:** `npm test --workspaces --if-present` → `@ruby/shared` 14 testes, `@ruby/db` e `@ruby/api` todos PASS (incluindo `isolation.test.ts` e o account linking da Task 5).
+- [ ] **Step 5:** `npx biome check .` e `npm run typecheck --workspaces --if-present` sem erros.
+- [ ] **Step 6: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Parar e aguardar o Davi commitar com a mensagem sugerida `fix(db): migrate to drizzle 1.0 relations (defineRelations)`.
 
 ---
 
@@ -246,7 +287,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3:** Implementar (a rota `/v1/services` de teste pode ser stub até a Task 7; o teste de isolamento é repetido na Task 7 com dados reais).
 - [ ] **Step 4:** PASS.
-- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(api): tenant creation and tenancy isolation`.
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Parar e aguardar o Davi commitar com a mensagem sugerida `feat(api): tenant creation and tenancy isolation`.
 
 ---
 
@@ -273,14 +314,14 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3:** Implementar.
 - [ ] **Step 4:** PASS.
-- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(api): business hours and services`.
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Parar e aguardar o Davi commitar com a mensagem sugerida `feat(api): business hours and services`.
 
 ---
 
 ### Task 8: `apps/web` — Next.js base, auth client e telas de login/cadastro
 
 **Files:**
-- Create: `apps/web` (Next App Router, Tailwind, shadcn init), `src/lib/auth-client.ts`, `src/lib/api.ts`, `src/app/(auth)/entrar/page.tsx`, `src/app/(auth)/cadastro/page.tsx`
+- Create: `apps/web` (Next App Router, Tailwind, shadcn init), `lib/auth-client.ts`, `lib/api.ts`, `app/(auth)/entrar/page.tsx`, `app/(auth)/cadastro/page.tsx`
 - Test: `apps/web/e2e/auth.spec.ts`
 
 **Interfaces:**
@@ -295,20 +336,20 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 3:** FAIL.
 - [ ] **Step 4:** Implementar com componentes shadcn (Form + Zod).
 - [ ] **Step 5:** PASS; rodar `web-design-guidelines` nas duas telas e corrigir achados.
-- [ ] **Step 6: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(web): auth screens`.
+- [ ] **Step 6: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Parar e aguardar o Davi commitar com a mensagem sugerida `feat(web): auth screens`.
 
 ---
 
 ### Task 9: Proteção de rotas, onboarding e painel base
 
 **Files:**
-- Create: `src/middleware.ts`, `src/app/onboarding/page.tsx`, `src/app/(painel)/layout.tsx`, `src/app/(painel)/inicio/page.tsx`, `src/lib/current-tenant.ts`
+- Create: `proxy.ts`, `app/onboarding/page.tsx`, `app/(painel)/layout.tsx`, `app/(painel)/inicio/page.tsx`, `lib/current-tenant.ts`
 - Test: `apps/web/e2e/onboarding.spec.ts`
 
 **Interfaces:**
 - Consumes: `POST/GET /v1/tenants`, `apiFetch`
 - Produces:
-  - Middleware: rotas `(painel)` e `/onboarding` exigem cookie de sessão; senão → `/entrar?next=<path>`
+  - Proxy (`proxy.ts`, Next 16): rotas `(painel)` e `/onboarding` exigem cookie de sessão; senão → `/entrar?next=<path>`
   - `getCurrentTenantId(): string | null` — cookie `ruby_tenant` (setado após criar/selecionar)
   - Layout do painel: navegação lateral (Início, Configurações › Horários, Serviços), nome do negócio, menu do usuário (Sair)
   - Onboarding passo 1: nome do negócio + fuso (select, default São Paulo) → cria tenant → `/configuracoes/horarios`
@@ -321,14 +362,14 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3:** Implementar.
 - [ ] **Step 4:** PASS.
-- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(web): route protection, onboarding and dashboard shell`.
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Parar e aguardar o Davi commitar com a mensagem sugerida `feat(web): route protection, onboarding and dashboard shell`.
 
 ---
 
 ### Task 10: Telas de horários e serviços
 
 **Files:**
-- Create: `src/app/(painel)/configuracoes/horarios/page.tsx`, `src/app/(painel)/configuracoes/servicos/page.tsx`, componentes em `src/components/settings/`
+- Create: `app/(painel)/configuracoes/horarios/page.tsx`, `app/(painel)/configuracoes/servicos/page.tsx`, componentes em `components/settings/`
 - Test: `apps/web/e2e/settings.spec.ts`
 
 **Interfaces:**
@@ -341,7 +382,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3:** Implementar. Preço digitado em reais, enviado em centavos.
 - [ ] **Step 4:** PASS; rodar `/audit` do Impeccable e `web-design-guidelines`; corrigir.
-- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `feat(web): business hours and services settings`.
+- [ ] **Step 5: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Parar e aguardar o Davi commitar com a mensagem sugerida `feat(web): business hours and services settings`.
 
 ---
 
@@ -350,7 +391,7 @@ test("timezone default", () => expect(createTenantInput.parse({ name: "Barbearia
 **Files:**
 - Create: `.github/workflows/ci.yml`, `README.md` (como rodar local)
 
-- [ ] **Step 1:** CI: Postgres service 16, `pnpm install --frozen-lockfile`, `pnpm biome check .`, `pnpm typecheck`, `pnpm test`, `pnpm --filter @ruby/web exec playwright test`.
+- [ ] **Step 1:** CI: Postgres service 16, `npm ci`, `npx biome check .`, `npm run typecheck --workspaces --if-present`, `npm test --workspaces --if-present`, `npx -w @ruby/web playwright test`.
 - [ ] **Step 2:** Rodar localmente toda a sequência → tudo verde (usar `superpowers:verification-before-completion`).
 - [ ] **Step 3:** `superpowers:requesting-code-review` na branch inteira.
-- [ ] **Step 4: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Deixar as mudanças no working tree; o Davi faz o commit com a mensagem sugerida `chore: ci and readme`.
+- [ ] **Step 4: Entregar sem commit** — NÃO rodar `git add`/`git commit`. Parar e aguardar o Davi commitar com a mensagem sugerida `chore: ci and readme`.

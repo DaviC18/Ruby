@@ -2,7 +2,7 @@
 
 **Data:** 2026-11-16
 **Autor:** Davi Curty (produto) · Claude (redação)
-**Status:** Aguardando aprovação
+**Status:** Em execução (Fase 1). Revisado em 2026-11-18: npm, versões fixadas, regras do Drizzle 1.0, reaproveitamento do Mariana-Core (8.7), questão da agenda (13).
 
 > Legenda: itens marcados **[decisão do Davi]** foram definidos por ele. Itens marcados **[escolha do Claude]** foram propostos e aceitos em conversa ou são decisões menores tomadas na redação. Itens marcados **[a cargo do builder]** ficam livres para quem implementar.
 
@@ -153,7 +153,7 @@ Outras escolhas: **WhatsApp** API oficial (vs. QR code não oficial — risco de
 ## 8. Arquitetura técnica
 
 ### 8.1 Stack [decisão do Davi]
-- **Monorepo:** pnpm workspaces + Turborepo
+- **Monorepo:** npm workspaces + Turborepo
 - **Web:** Next.js (App Router), React, TypeScript, Tailwind, shadcn/ui; GSAP para animações (com `prefers-reduced-motion`)
 - **API:** Node.js + Fastify (TypeScript)
 - **Banco:** PostgreSQL; ORM **Drizzle**; validação **Zod**; hospedagem **Neon** [escolha do Claude — MongoDB descartado por não ser Postgres]
@@ -164,22 +164,40 @@ Outras escolhas: **WhatsApp** API oficial (vs. QR code não oficial — risco de
 - **Qualidade:** Biome (lint + format), TypeScript strict
 - **Testes:** Vitest (unidade/integração na API com Postgres de teste), Playwright (E2E web) [escolha do Claude]
 - **Mobile:** depois; framework a definir [decisão do Davi]
+- **Gerenciador de pacotes:** **npm** (workspaces). Comandos por pacote: `npm run <script> -w @ruby/<pacote>`; em todos: `npm run <script> --workspaces --if-present`. [decisão do Davi]
+
+#### Versões fixadas (iguais ao Mariana-Core, para portar código sem ajuste)
+| Pacote | Versão | Onde |
+|---|---|---|
+| `drizzle-orm` / `drizzle-kit` | **1.0.0-rc.5** (mesma versão em **todos** os workspaces) | `@ruby/db`, `@ruby/api` |
+| `zod` | 4.x | todos |
+| `fastify` | 5.x | `@ruby/api` |
+| `better-auth` | 1.7.x (mesma versão em api e web) | `@ruby/api`, `@ruby/web` |
+| `next` / `react` | 16.x / 19.x | `@ruby/web` |
+
+Regra: nunca duas versões do Drizzle no monorepo. Conferir com `npm ls drizzle-orm drizzle-kit --workspaces --depth=0`.
+
+#### Regras do Drizzle 1.0
+- Relações **somente** com `defineRelations()` em `packages/db/src/schema/relations.ts`. A função antiga `relations()` **não existe** na 1.0.
+- Cliente: `drizzle({ client, relations })` (não `drizzle(client, { schema })`).
+- Migrações no formato 1.0 (uma pasta por migração com `snapshot.json`). Migrações antigas são convertidas com `npx drizzle-kit up`.
+- O `@better-auth/cli generate` ainda gera `relations()` antigos no `auth.ts`: após gerar, **apagar esses blocos** e manter as relações só no `relations.ts`. O adapter recebe as tabelas explicitamente: `drizzleAdapter(db, { provider: "pg", schema })`.
 
 ### 8.2 Estrutura do repositório
 ```
 ruby/
 ├─ apps/
-│  ├─ web/          Next.js — painel do dono + admin + landing
+│  ├─ web/          Next.js — painel do dono + admin + landing (App Router em apps/web/app, sem src/)
 │  ├─ api/          Fastify — REST, webhooks, Better Auth, workers pg-boss
 │  └─ mobile/       (futuro)
 ├─ packages/
-│  ├─ db/           schema Drizzle, migrações, client
+│  ├─ db/           schema Drizzle (+ schema/relations.ts), migrações, client
 │  ├─ shared/       schemas Zod, tipos, constantes de planos, utils de data
 │  └─ config/       tsconfig base
 ├─ docker-compose.yml
 ├─ biome.json
 ├─ turbo.json
-└─ pnpm-workspace.yaml
+└─ package.json      (workspaces: apps/*, packages/*)
 ```
 
 ### 8.3 Processos
@@ -224,6 +242,36 @@ Toda tabela de negócio tem `tenant_id` e toda consulta passa por um helper que 
 - Testes automatizados de isolamento entre tenants.
 - Segredos só via variáveis de ambiente; `.env.example` versionado.
 
+### 8.7 Reaproveitamento do Mariana-Core [decisão do Davi]
+O Mariana-Core (`github.com/DaviC18/Mariana-Core`, `apps/api`) usa o mesmo stack. **Não é base do Ruby** (é single-tenant, com acesso por chave de admin, e o núcleo é IA e consórcio). Ele é **fonte de peças**: ao portar, todo acesso a dados ganha `tenant_id` e passa pelos repositórios com `tenantId`.
+
+**Portar quase igual**
+| Mariana (`apps/api/src/...`) | Uso no Ruby | Fase |
+|---|---|---|
+| `utils/verify-webhook-signature.ts` | Assinatura dos webhooks da Meta | 2 |
+| `integrations/whatsapp/{whatsapp-client,whatsapp-errors,whatsapp-types,whatsapp-service}.ts` | Envio pela Cloud API, timeout e classificação de erro | 2 |
+| `services/conversations/whatsapp-compliance.ts` | Janela de 24h e opt-out | 2 |
+| `lib/logger.ts`, `lib/error-classification.ts`, `utils/retry-backoff.ts` | Logs com segredos mascarados, retry | 2 |
+| `lib/security/{constant-time,signed-token}.ts` | Comparação segura, state OAuth assinado | 2, 4 |
+| `integrations/google-calendar/{google-calendar-errors,calendar-connection-health}.ts` | Token revogado (`invalid_grant`), reconexão | 4 |
+| `tests/support/` (guarda de banco de teste, bloqueio de rede) | Testes seguros | 2 |
+
+**Portar a lógica, reescrevendo com `tenant_id`**
+| Mariana | Ruby | Fase |
+|---|---|---|
+| `routes/whatsapp/webhook-whatsapp.ts` + tabela `whatsapp_webhook_events` (dedup) | Webhook com deduplicação | 2 |
+| `services/messaging/outbound-messages.ts` (outbox com lease e chave de idempotência) | `outbound.send` no pg-boss com chave de idempotência | 2 |
+| `services/conversations/{active-conversation,session-rotation,inbound-message-batch,stale-tap-reply}.ts` | Conversa ativa única, agrupamento de mensagens, toque em botão antigo | 3 |
+| `routes/google-calendar/auth-google.ts` (state assinado + cookie de nonce) | Conexão Google separada do login | 4 |
+| `integrations/google-calendar/google-calendar-service.ts` (evento + Meet, `getMeetLink`) | Criação de eventos e Meet | 4 |
+| `services/calendar/{availability,scheduling-availability,scheduling-offer-service,scheduling-choice-service,scheduling-confirmation-service,scheduling-cancellation-service,scheduling-session-expiration}.ts` | Disponibilidade, oferta com botões, confirmar e cancelar | 5 |
+| `services/calendar/appointment-service.ts` (Calendar + banco + compensação) | Criação do agendamento | 5 |
+| `apps/web/src/components/{layout,ui,conversations,appointments}` | Ponto de partida de telas (depois o Impeccable) | 2, 5, 9 |
+
+**Não portar na v1:** `ai/*`, base de conhecimento de consórcio e Ademicon, qualificação de leads, ingestão por Meta/Google Ads, `generateMarianaResponse`. Referência para a fase de IA: `services/flow-v2/` (roteador com listas fechadas de intenção antes de chamar o modelo).
+
+**Fila:** o Ruby usa **pg-boss**. Da fila própria do Mariana (`autonomous_tasks`) vêm só os padrões: uma tarefa por conversa por vez e chave de idempotência em todo envio.
+
 ## 9. Diretrizes para agentes (Claude Code)
 
 ### 9.1 Processo — Superpowers
@@ -254,7 +302,7 @@ Regras: **Impeccable no painel; Taste só na landing** (evitar regras conflitant
 - Commits pequenos e convencionais (`feat:`, `fix:`, `chore:`...).
 
 ## 10. Fases de entrega [escolha do Claude]
-A ordem e o escopo de cada fase estão em `docs/superpowers/plans/2026-11-16-ruby-roadmap.md`. Resumo: (1) fundação + auth + tenants + horários/serviços → (2) WhatsApp → (3) menu guiado → (4) Google → (5) agendamento ponta a ponta → (6) automações → (7) planos e Stripe → (8) disparos → (9) painel completo e admin → (10) landing, polimento e lançamento → depois: mobile e IA.
+A ordem e o escopo de cada fase estão em `docs/plans/2026-11-16-ruby-roadmap.md`. Resumo: (1) fundação + auth + tenants + horários/serviços → (2) WhatsApp → (3) menu guiado → (4) Google → (5) agendamento ponta a ponta → (6) automações → (7) planos e Stripe → (8) disparos → (9) painel completo e admin → (10) landing, polimento e lançamento → depois: mobile e IA.
 
 ## 11. Dependências externas (bloqueiam lançamento, não desenvolvimento)
 - Conta Meta Business verificada + cadastro como **Tech Provider** + app Meta com WhatsApp e Embedded Signup — **Davi**.
@@ -268,7 +316,12 @@ A ordem e o escopo de cada fase estão em `docs/superpowers/plans/2026-11-16-rub
 - Estrutura interna de pastas dentro de cada app.
 - Estratégia de deploy (sugestão: web na Vercel; API + worker em serviço de container, ex.: Railway/Fly/Render). [escolha do Claude — o Davi pode trocar]
 
-## 13. Questões em aberto (não bloqueiam a v1)
+## 13. Questões em aberto
+
+**Bloqueia o plano da Fase 2 em diante (decidir antes):**
+- **Agenda por negócio ou por profissional?** Opção A: um Google Calendar por negócio. Opção B: cada profissional (barbeiro, dentista) com o próprio Calendar, e o cliente escolhe o profissional ou recebe o primeiro livre, como os consultores do Mariana. A opção B acrescenta a tabela `professional`, a relação serviço × profissional, `google_connection` por profissional e um passo "escolher profissional" no menu.
+
+**Não bloqueiam a v1:**
 - Limites exatos de disparo para lista por plano.
 - Framework do mobile.
 - Gateway com Pix recorrente (Asaas) — depois.

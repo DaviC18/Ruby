@@ -29,10 +29,52 @@ type FieldErrors = Partial<Record<"name" | "email" | "password", string>>;
 
 const NETWORK_ERROR =
   "Não foi possível conectar ao Ruby. Verifique sua internet e tente de novo.";
+const GENERIC_ERROR = "Algo deu errado. Tente de novo em instantes.";
+const GOOGLE_ERROR = "Não foi possível continuar com o Google. Tente de novo.";
 
-// Only relative paths, so ?next= cannot redirect off-site.
+// Better Auth answers in English; the owner only ever sees pt-BR.
+// Unknown e-mail and wrong password share one message (no account probing).
+function authErrorMessage(error: { status: number; code?: string }) {
+  if (error.status === 401 || error.code === "INVALID_EMAIL_OR_PASSWORD") {
+    return "E-mail ou senha incorretos.";
+  }
+  if (
+    error.code === "USER_ALREADY_EXISTS" ||
+    error.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL"
+  ) {
+    return "Já existe uma conta com este e-mail. Entre com ela.";
+  }
+  if (error.code === "PASSWORD_TOO_SHORT") {
+    return "A senha precisa ter pelo menos 8 caracteres.";
+  }
+  if (error.status === 429) {
+    return "Muitas tentativas seguidas. Aguarde um minuto e tente de novo.";
+  }
+  return error.status === 0 ? NETWORK_ERROR : GENERIC_ERROR;
+}
+
+// Only same-origin paths, so ?next= cannot redirect off-site. Defense in depth:
+// 1. The raw value must be one "/" followed by a char other than "/" or "\",
+//    with no ASCII control char (the URL parser strips tab/newline) and no
+//    backslash anywhere (browsers read "\" as "/").
+// 2. It must resolve on a fixed base's origin (catches "https:", "javascript:").
+// 3. The normalized pathname must not start with "//" or "/\": dot-segment
+//    removal turns "/..//host" into "//host", which is protocol-relative.
+// A fixed base keeps this pure and render-safe; only path, query and hash are used.
+const NEXT_BASE = "http://ruby.invalid";
+// biome-ignore lint/suspicious/noControlCharactersInRegex: rejecting control chars is the point.
+const UNSAFE_CHARS = /[\u0000-\u001F\u007F\\]/;
+
 function safeNext(next: string | null) {
-  return next?.startsWith("/") && !next.startsWith("//") ? next : null;
+  if (!next || !/^\/[^/\\]/.test(next) || UNSAFE_CHARS.test(next)) return null;
+  try {
+    const url = new URL(next, NEXT_BASE);
+    if (url.origin !== NEXT_BASE) return null;
+    if (/^\/[/\\]/.test(url.pathname)) return null;
+    return `${url.pathname}${url.search}${url.hash}`;
+  } catch {
+    return null;
+  }
 }
 
 function GoogleMark() {
@@ -69,12 +111,14 @@ export function AuthForm({ mode }: { mode: Mode }) {
 
   const isSignup = mode === "cadastro";
   // New accounts go to onboarding; returning owners go back where they were.
-  const destination = isSignup ? "/onboarding" : (next ?? "/inicio");
+  // TODO(fase 1, task 9): owners with a business land on /inicio instead.
+  const destination = (!isSignup && next) || "/onboarding";
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setFormError(null);
-    const data = Object.fromEntries(new FormData(e.currentTarget));
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form));
     const parsed = schemas[mode].safeParse(data);
     if (!parsed.success) {
       const fieldErrors: FieldErrors = {};
@@ -83,6 +127,12 @@ export function AuthForm({ mode }: { mode: Mode }) {
         fieldErrors[key] ??= issue.message;
       }
       setErrors(fieldErrors);
+      // Move focus to the first invalid field so its error is read out.
+      const first = (["name", "email", "password"] as const).find(
+        (key) => fieldErrors[key],
+      );
+      if (first)
+        form.querySelector<HTMLInputElement>(`[name="${first}"]`)?.focus();
       return;
     }
     setErrors({});
@@ -94,14 +144,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
           )
         : await authClient.signIn.email(parsed.data);
       if (error) {
-        setFormError(
-          error.status === 401 || error.code === "INVALID_EMAIL_OR_PASSWORD"
-            ? "E-mail ou senha incorretos."
-            : error.code === "USER_ALREADY_EXISTS" ||
-                error.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL"
-              ? "Já existe uma conta com este e-mail. Entre com ela."
-              : (error.message ?? NETWORK_ERROR),
-        );
+        setFormError(authErrorMessage(error));
         setPending(null);
         return;
       }
@@ -118,11 +161,10 @@ export function AuthForm({ mode }: { mode: Mode }) {
     try {
       const { error } = await authClient.signIn.social({
         provider: "google",
-        callbackURL: `${window.location.origin}${destination}`,
-        newUserCallbackURL: `${window.location.origin}/onboarding`,
+        callbackURL: `${window.location.origin}/onboarding`,
       });
       if (error) {
-        setFormError(error.message ?? NETWORK_ERROR);
+        setFormError(error.status === 0 ? NETWORK_ERROR : GOOGLE_ERROR);
         setPending(null);
       }
     } catch {
@@ -131,11 +173,17 @@ export function AuthForm({ mode }: { mode: Mode }) {
     }
   }
 
+  const passwordHintId = `${id}-password-dica`;
   const field = (name: keyof FieldErrors) => ({
     id: `${id}-${name}`,
     name,
+    required: true,
     "aria-invalid": errors[name] ? true : undefined,
-    "aria-describedby": errors[name] ? `${id}-${name}-erro` : undefined,
+    "aria-describedby": errors[name]
+      ? `${id}-${name}-erro`
+      : name === "password" && isSignup
+        ? passwordHintId
+        : undefined,
   });
 
   const fieldError = (name: keyof FieldErrors) =>
@@ -197,6 +245,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
             type="email"
             inputMode="email"
             autoComplete="email"
+            autoCapitalize="none"
             spellCheck={false}
           />
           {fieldError("email")}
@@ -217,7 +266,8 @@ export function AuthForm({ mode }: { mode: Mode }) {
               type="button"
               onClick={() => setShowPassword((v) => !v)}
               aria-pressed={showPassword}
-              className="absolute inset-y-0 right-0 grid w-11 place-items-center rounded-r-md text-muted-foreground hover:text-foreground"
+              aria-controls={`${id}-password`}
+              className="absolute inset-y-0 right-0 grid w-11 place-items-center rounded-r-md text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               {showPassword ? (
                 <EyeOff className="size-4" />
@@ -230,7 +280,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
             </button>
           </div>
           {isSignup && !errors.password && (
-            <p className="text-sm text-muted-foreground">
+            <p id={passwordHintId} className="text-sm text-muted-foreground">
               Pelo menos <span className="font-mono tabular-nums">8</span>{" "}
               caracteres.
             </p>
