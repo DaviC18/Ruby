@@ -1,4 +1,5 @@
 import type { Db } from "@ruby/db";
+import * as schema from "@ruby/db/schema";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import type { Env } from "../env";
@@ -11,7 +12,7 @@ export function createAuth(db: Db, env: Env) {
 	);
 
 	return betterAuth({
-		database: drizzleAdapter(db, { provider: "pg" }),
+		database: drizzleAdapter(db, { provider: "pg", schema }),
 		secret: env.BETTER_AUTH_SECRET,
 		baseURL: env.API_URL,
 		basePath: "/auth",

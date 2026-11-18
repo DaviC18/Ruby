@@ -2,7 +2,8 @@
 // from apps/api/src/auth/auth.ts. Only hand change: timestamps use
 // `withTimezone: true` to match the rest of the schema.
 // Re-run the generator whenever Better Auth plugins or auth options change.
-import { relations } from "drizzle-orm";
+// Drizzle 1.0: after generating, delete the `relations()` blocks it emits;
+// relations live only in ./relations.ts (defineRelations).
 import { boolean, index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -88,22 +89,3 @@ export const verification = pgTable(
 	},
 	(table) => [index("verification_identifier_idx").on(table.identifier)],
 );
-
-export const userRelations = relations(user, ({ many }) => ({
-	sessions: many(session),
-	accounts: many(account),
-}));
-
-export const sessionRelations = relations(session, ({ one }) => ({
-	user: one(user, {
-		fields: [session.userId],
-		references: [user.id],
-	}),
-}));
-
-export const accountRelations = relations(account, ({ one }) => ({
-	user: one(user, {
-		fields: [account.userId],
-		references: [user.id],
-	}),
-}));
